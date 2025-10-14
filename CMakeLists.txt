@@ -11,6 +11,7 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
 include(GNUInstallDirs)
+include(CTest)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(ROPTLITE_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/ROPTLITE)
 
@@ -191,6 +192,10 @@ endif()
 # Compile the simple product test program from ROPTLITE
 # add_executable(TestProductBrockett test/TestProductExample.cpp test/TestProductExample.cpp)
 # target_link_libraries(TestProductBrockett ROPTLITE)
+
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 
 ################################ INSTALL ##########################################
 # include(CMakePackageConfigHelpers)
