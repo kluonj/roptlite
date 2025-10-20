@@ -144,8 +144,8 @@ add_library(ROPTLITE SHARED ${SRC_LIST})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-target_include_directories(ROPTLITE PUBLIC 
-   PUBLIC 
+target_include_directories(ROPTLITE  
+   PRIVATE 
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Manifolds>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Others>
@@ -172,7 +172,7 @@ target_include_directories(ROPTLITE PUBLIC
    
 )
 
-target_link_libraries(ROPTLITE ${LAPACK} ${BLAS} ${M})
+target_link_libraries(ROPTLITE PRIVATE ${LAPACK} ${BLAS} ${M})
 set_target_properties(ROPTLITE PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 if(${CODE_PROFILING})
