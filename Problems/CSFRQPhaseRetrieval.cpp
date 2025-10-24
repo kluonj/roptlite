@@ -43,16 +43,16 @@ namespace ROPTLITE {
             {
                 for(integer k = 0; k < n; k++)
                 {
-                    tmpvptr[k].r = (masksptr[k + i * n].r * xptr[k + j * n].r - masksptr[k + i * n].i * xptr[k + j * n].i) / sqn;
-                    tmpvptr[k].i = (masksptr[k + i * n].i * xptr[k + j * n].r + masksptr[k + i * n].r * xptr[k + j * n].i) / sqn;
+                    realdp newReal = (masksptr[k + i * n].real() * xptr[k + j * n].real() - masksptr[k + i * n].imag() * xptr[k + j * n].imag()) / sqn;
+                    realdp newImag = (masksptr[k + i * n].imag() * xptr[k + j * n].real() + masksptr[k + i * n].real() * xptr[k + j * n].imag()) / sqn;
+                    tmpvptr[k] = realdpcomplex(newReal, newImag);
                 }
                 
                 tmpv.Reshape(n1, n2).FFT2D(FFTW_FORWARD, &tmpv2).Reshape(n, 1); /* tmpv = (masks.GetSubmatrix(0, n - 1, i, i).GetHadamardProduct(x.GetSubmatrix(0, n - 1, j, j))) / sqn; */
                 
                 for(integer k = 0; k < n; k++)
                 { /* ZY.SubmatrixAssignment(i * n, (i + 1) * n - 1, j, j, tmpv.Reshape(n1, n2).GetFFT2D(FFTW_FORWARD).Reshape(n, 1)); */
-                    ZYptr[i * n + k + j * m].r = tmpv2ptr[k].r;
-                    ZYptr[i * n + k + j * m].i = tmpv2ptr[k].i;
+                    ZYptr[i * n + k + j * m] = realdpcomplex(tmpv2ptr[k].real(), tmpv2ptr[k].imag());
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace ROPTLITE {
         {
             for(integer j = 0; j < r; j++)
             {
-                cDptr[i] += ZYptr[i + j * m].r * ZYptr[i + j * m].r + ZYptr[i + j * m].i * ZYptr[i + j * m].i;
+                cDptr[i] += ZYptr[i + j * m].real() * ZYptr[i + j * m].real() + ZYptr[i + j * m].imag() * ZYptr[i + j * m].imag();
             }
             cDptr[i] -= bptr[i];
         }
@@ -126,8 +126,9 @@ namespace ROPTLITE {
                 /* gfi.SubmatrixAssignment(0, n - 1, j, j, tmpv.GetHadamardProduct(masks.GetSubmatrix(0, n - 1, i, i).GetConj())); */
                 for(integer k = 0; k < n; k++)
                 {
-                    gfiptr[k + j * n].r = tmpvptr[k].r * masksptr[k + i * n].r + tmpvptr[k].i * masksptr[k + i * n].i;
-                    gfiptr[k + j * n].i = tmpvptr[k].i * masksptr[k + i * n].r - tmpvptr[k].r * masksptr[k + i * n].i;
+                    realdp newReal = tmpvptr[k].real() * masksptr[k + i * n].real() + tmpvptr[k].imag() * masksptr[k + i * n].imag();
+                    realdp newImag = tmpvptr[k].imag() * masksptr[k + i * n].real() - tmpvptr[k].real() * masksptr[k + i * n].imag();
+                    gfiptr[k + j * n] = realdpcomplex(newReal, newImag);
                 }
             }
             result->AlphaXaddThis(1, gfi);
@@ -160,8 +161,9 @@ namespace ROPTLITE {
                 /* tmpv = (masks.GetSubmatrix(0, n - 1, i, i).GetHadamardProduct(etax.GetSubmatrix(0, n - 1, j, j))) / sqn; */
                 for(integer k = 0; k < n; k++)
                 {
-                    tmpvptr[k].r = (masksptr[k + i * n].r * etaxptr[k + j * n].r - masksptr[k + i * n].i * etaxptr[k + j * n].i) / sqn;
-                    tmpvptr[k].i = (masksptr[k + i * n].i * etaxptr[k + j * n].r + masksptr[k + i * n].r * etaxptr[k + j * n].i) / sqn;
+                    realdp newReal = (masksptr[k + i * n].real() * etaxptr[k + j * n].real() - masksptr[k + i * n].imag() * etaxptr[k + j * n].imag()) / sqn;
+                    realdp newImag = (masksptr[k + i * n].imag() * etaxptr[k + j * n].real() + masksptr[k + i * n].real() * etaxptr[k + j * n].imag()) / sqn;
+                    tmpvptr[k] = realdpcomplex(newReal, newImag);
                 }
                 
                 /* Zetax.SubmatrixAssignment(i * n, (i + 1) * n - 1, j, j, tmpv.Reshape(n1, n2).GetFFT2D(FFTW_FORWARD).Reshape(n, 1)); */
@@ -186,8 +188,9 @@ namespace ROPTLITE {
                 /* tmpi.SubmatrixAssignment(0, n - 1, j, j, tmpv.GetHadamardProduct(masks.GetSubmatrix(0, n - 1, i, i).GetConj())); */
                 for(integer k = 0; k < n; k++)
                 {
-                    tmpiptr[k + j * n].r = tmpvptr[k].r * masksptr[k + i * n].r + tmpvptr[k].i * masksptr[k + i * n].i;
-                    tmpiptr[k + j * n].i = tmpvptr[k].i * masksptr[k + i * n].r - tmpvptr[k].r * masksptr[k + i * n].i;
+                    realdp newReal = tmpvptr[k].real() * masksptr[k + i * n].real() + tmpvptr[k].imag() * masksptr[k + i * n].imag();
+                    realdp newImag = tmpvptr[k].imag() * masksptr[k + i * n].real() - tmpvptr[k].real() * masksptr[k + i * n].imag();
+                    tmpiptr[k + j * n] = realdpcomplex(newReal, newImag);
                 }
             }
             result->AlphaXaddThis(1, tmpi);

@@ -72,7 +72,7 @@ namespace ROPTLITE{
 
         for(integer i = 0; i < nz; i++)
         {
-            printf("i:%lu, j:%lu, val:%.10e+%.10e i\n", ir[i], jc[i], valscomplex[i].r, valscomplex[i].i);
+            printf("i:%lu, j:%lu, val:%.10e+%.10e i\n", ir[i], jc[i], valscomplex[i].real(), valscomplex[i].imag());
         }
         if(nz == 0)
             printf("Empty matrix.\n");

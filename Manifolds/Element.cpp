@@ -190,8 +190,8 @@ namespace ROPTLITE{
         const realdp *leftptr = left.ObtainReadData();
         for(integer i = 0; i < left.Getlength(); i++, i++)
         {
-            resultptr[i] = leftptr[i] + right.r;
-            resultptr[i + 1] = leftptr[i + 1] + right.i;
+            resultptr[i] = leftptr[i] + right.real();
+            resultptr[i + 1] = leftptr[i + 1] + right.imag();
         }
 
         return result;
@@ -217,8 +217,8 @@ namespace ROPTLITE{
         const realdp *rightptr = right.ObtainReadData();
         for(integer i = 0; i < right.Getlength(); i++, i++)
         {
-            resultptr[i] = rightptr[i] + left.r;
-            resultptr[i + 1] = rightptr[i + 1] + left.i;
+            resultptr[i] = rightptr[i] + left.real();
+            resultptr[i + 1] = rightptr[i + 1] + left.imag();
         }
 
         return result;
@@ -266,8 +266,8 @@ namespace ROPTLITE{
         const realdp *leftptr = left.ObtainReadData();
         for(integer i = 0; i < left.Getlength(); i++, i++)
         {
-            resultptr[i] = leftptr[i] - right.r;
-            resultptr[i + 1] = leftptr[i + 1] - right.i;
+            resultptr[i] = leftptr[i] - right.real();
+            resultptr[i + 1] = leftptr[i + 1] - right.imag();
         }
 
         return result;
@@ -293,8 +293,8 @@ namespace ROPTLITE{
         const realdp *rightptr = right.ObtainReadData();
         for(integer i = 0; i < right.Getlength(); i++, i++)
         {
-            resultptr[i] = left.r - rightptr[i];
-            resultptr[i + 1] = left.i - rightptr[i + 1];
+            resultptr[i] = left.real() - rightptr[i];
+            resultptr[i + 1] = left.imag() - rightptr[i + 1];
         }
 
         return result;
@@ -363,8 +363,8 @@ namespace ROPTLITE{
         
         for(integer i = 0; i < mat.Getlength(); i++, i++)
         {
-            resultptr[i] = value.r * matptr[i] - value.i * matptr[i + 1];
-            resultptr[i + 1] = value.r * matptr[i + 1] + value.i * matptr[i];
+            resultptr[i] = value.real() * matptr[i] - value.imag() * matptr[i + 1];
+            resultptr[i + 1] = value.real() * matptr[i + 1] + value.imag() * matptr[i];
         }
 
         return result;
@@ -391,8 +391,8 @@ namespace ROPTLITE{
         
         for(integer i = 0; i < mat.Getlength(); i++, i++)
         {
-            resultptr[i] = value.r * matptr[i] - value.i * matptr[i + 1];
-            resultptr[i + 1] = value.r * matptr[i + 1] + value.i * matptr[i];
+            resultptr[i] = value.real() * matptr[i] - value.imag() * matptr[i + 1];
+            resultptr[i + 1] = value.real() * matptr[i + 1] + value.imag() * matptr[i];
         }
 
         return result;
@@ -514,12 +514,12 @@ namespace ROPTLITE{
         Element result(mat);
         const realdp *matptr = mat.ObtainReadData();
         realdp *resultptr = result.ObtainWriteEntireData();
-        realdp tmp = value.r * value.r + value.i * value.i;
+        realdp tmp = value.real() * value.real() + value.imag() * value.imag();
         
         for(integer i = 0; i < mat.Getlength(); i++, i++)
         {
-            resultptr[i] = (value.r * matptr[i] + value.i * matptr[i + 1]) / tmp;
-            resultptr[i + 1] = (value.r * matptr[i + 1] - value.i * matptr[i]) / tmp;
+            resultptr[i] = (value.real() * matptr[i] + value.imag() * matptr[i + 1]) / tmp;
+            resultptr[i + 1] = (value.real() * matptr[i + 1] - value.imag() * matptr[i]) / tmp;
         }
 
         return result;
@@ -549,8 +549,8 @@ namespace ROPTLITE{
         for(integer i = 0; i < mat.Getlength(); i++, i++)
         {
             tmp = matptr[i] * matptr[i] + matptr[i + 1] * matptr[i + 1];
-            resultptr[i] = (value.r * matptr[i] + value.i * matptr[i + 1]) / tmp;
-            resultptr[i + 1] = (-value.r * matptr[i + 1] + value.i * matptr[i]) / tmp;
+            resultptr[i] = (value.real() * matptr[i] + value.imag() * matptr[i + 1]) / tmp;
+            resultptr[i + 1] = (-value.real() * matptr[i + 1] + value.imag() * matptr[i]) / tmp;
         }
 
         return result;
@@ -766,8 +766,8 @@ namespace ROPTLITE{
         {
             for(integer h = 0; h < rightcol; h++)
             {
-                resultptr[leftir[k] + leftrow * h].r += rightptr[leftjc[k] + rightrow * h].r * vals[k].r - rightptr[leftjc[k] + rightrow * h].i * vals[k].i;
-                resultptr[leftir[k] + leftrow * h].i += rightptr[leftjc[k] + rightrow * h].r * vals[k].i + rightptr[leftjc[k] + rightrow * h].i * vals[k].r;
+                resultptr[leftir[k] + leftrow * h] += realdpcomplex{+rightptr[leftjc[k] + rightrow * h].real() * vals[k].real() - rightptr[leftjc[k] + rightrow * h].imag() * vals[k].imag(), 0.0};
+                resultptr[leftir[k] + leftrow * h] += realdpcomplex{0.0, +rightptr[leftjc[k] + rightrow * h].real() * vals[k].imag() + rightptr[leftjc[k] + rightrow * h].imag() * vals[k].real()};
             }
         }
         
@@ -813,8 +813,8 @@ namespace ROPTLITE{
         {
             for(integer h = 0; h < leftrow; h++)
             {
-                resultptr[h + leftrow * rightjc[k]].r += leftptr[h + leftrow * rightir[k]].r * vals[k].r - leftptr[h + leftrow * rightir[k]].i * vals[k].i;
-                resultptr[h + leftrow * rightjc[k]].i += leftptr[h + leftrow * rightir[k]].i * vals[k].r + leftptr[h + leftrow * rightir[k]].r * vals[k].i;
+                resultptr[h + leftrow * rightjc[k]] += realdpcomplex{+leftptr[h + leftrow * rightir[k]].real() * vals[k].real() - leftptr[h + leftrow * rightir[k]].imag() * vals[k].imag(), 0.0};
+                resultptr[h + leftrow * rightjc[k]] += realdpcomplex{0.0, +leftptr[h + leftrow * rightir[k]].imag() * vals[k].real() + leftptr[h + leftrow * rightir[k]].real() * vals[k].imag()};
             }
         }
         return result;
@@ -994,7 +994,7 @@ namespace ROPTLITE{
         /*Obtain the size of memory required for eigenvalue decomposition*/
         heev_(JobZ, UorL, &N, EigVecptr, &N, EigValptr, &lworkopt, &lwork, rwork, &info);
         /*allocate the desired memory*/
-        lwork = static_cast<integer> (lworkopt.r);
+        lwork = static_cast<integer> (lworkopt.real());
         realdpcomplex *work = new realdpcomplex[lwork];
         heev_(JobZ, UorL, &N, EigVecptr, &N, EigValptr, work, &lwork, rwork, &info);
         delete[] work;
@@ -1047,7 +1047,7 @@ namespace ROPTLITE{
         
         for(integer i = 0; i < N; i++)
         {
-            realdp a = exp(EigValptr[i].r);
+            realdp a = exp(EigValptr[i].real());
             integer N2 = N * 2;
             scal_(&N2, &a, Tmpptr + i * 2 * N, &GLOBAL::IONE);
         }
@@ -1097,12 +1097,12 @@ namespace ROPTLITE{
         
         for(integer i = 0; i < N; i++)
         {
-            if(EigValptr[i].r <= 0)
+            if(EigValptr[i].real() <= 0)
             {
                 printf("Error: Eigenvalues have negative values. Log can not be computed!\n");
                 return (*this);
             }
-            a = log(EigValptr[i].r);
+            a = log(EigValptr[i].real());
             integer N2 = N * 2;
             scal_(&N2, &a, Tmpptr + i * 2 * N, &GLOBAL::IONE);
         }
@@ -1152,12 +1152,12 @@ namespace ROPTLITE{
         
         for(integer i = 0; i < N; i++)
         {
-            if(EigValptr[i].r <= 0)
+            if(EigValptr[i].real() <= 0)
             {
                 printf("Error: Eigenvalues have negative values. Sqrtm can not be computed!\n");
                 return (*this);
             }
-            a = std::sqrt(EigValptr[i].r);
+            a = std::sqrt(EigValptr[i].real());
             integer N2 = N * 2;
             scal_(&N2, &a, Tmpptr + i * 2 * N, &GLOBAL::IONE);
         }
@@ -1218,7 +1218,7 @@ namespace ROPTLITE{
         realdp *rwork = new realdp[2 * n];
         /* compute the space required in the geqp3 */
         geqp3_(&m, &n, HHRptr, &m, jpvt, tauptr, &lworkopt, &lwork, rwork, &info);
-        lwork = static_cast<integer> (lworkopt.r);
+        lwork = static_cast<integer> (lworkopt.real());
         realdpcomplex *work = new realdpcomplex[lwork];
         /* QR decomposition for ptrHHR using Householder reflections. Householder reflectors and R are stored in ptrHHR.
         details: www.netlib.org/lapack/explore-html/db/de5/geqp3_8f.html */
@@ -1316,7 +1316,7 @@ namespace ROPTLITE{
         realdpcomplex lworkopt;
         /* compute the space required in the ungqr */
         ungqr_(&m, &minmn, &minmn, (realdpcomplex *) Qptr, &m, const_cast<realdpcomplex *> (tauptr), &lworkopt, &lwork, &info);
-        lwork = static_cast<integer> (lworkopt.r);
+        lwork = static_cast<integer> (lworkopt.real());
         realdpcomplex *work = new realdpcomplex[lwork];
         ungqr_(&m, &minmn, &minmn, (realdpcomplex *) Qptr, &m, const_cast<realdpcomplex *> (tauptr), work, &lwork, &info);
         if (info < 0)
@@ -1365,7 +1365,7 @@ namespace ROPTLITE{
         realdpcomplex lworkopt;
 
         unmqr_(Side, Trans, &m, &n, &minrk, const_cast<realdpcomplex *> (HHRptr), &r, const_cast<realdpcomplex *> (tauptr), resultptr, &m, &lworkopt, &lwork, &info);
-        lwork = static_cast<integer> (lworkopt.r);
+        lwork = static_cast<integer> (lworkopt.real());
         realdpcomplex *work = new realdpcomplex[lwork];
 
         unmqr_(Side, Trans, &m, &n, &minrk, const_cast<realdpcomplex *> (HHRptr), &r, const_cast<realdpcomplex *> (tauptr), resultptr, &m, work, &lwork, &info);
@@ -1421,7 +1421,7 @@ namespace ROPTLITE{
         realdp *rwork = new realdp[5 * minmn];
         /* compute the space required in the SVD computation. */
         gesvd_(GLOBAL::S, GLOBAL::S, &m, &n, (realdpcomplex *) Aptr, &m, Sptr, (realdpcomplex *) Uptr, &m, (realdpcomplex *) Vtptr, &minmn, &workoptsize, &lwork, rwork, &info);
-        lwork = static_cast<integer> (workoptsize.r);
+        lwork = static_cast<integer> (workoptsize.real());
         realdpcomplex *work = new realdpcomplex[lwork];
         /* SVD: U * S * Vt = M, details: www.netlib.org/lapack/explore-html/d8/d2d/gesvd_8f.html */
         gesvd_(GLOBAL::S, GLOBAL::S, &m, &n, (realdpcomplex *) Aptr, &m, Sptr, (realdpcomplex *) Uptr, &m, (realdpcomplex *) Vtptr, &minmn, work, &lwork, rwork, &info);
@@ -1516,7 +1516,7 @@ namespace ROPTLITE{
         {
             /* compute the size of space required in the gees */
             gees_(jobvs, GLOBAL::N, nullptr, &n, SchurFormptr, &n, &sdim, eigs, nullptr, &n, &lworkopt, &lwork, rwork, nullptr, &info);
-            lwork = static_cast<integer> (lworkopt.r);
+            lwork = static_cast<integer> (lworkopt.real());
             realdpcomplex *work = new realdpcomplex[lwork];
             /* generalized schur decomposition for matrices A.
             details: www.netlib.org/lapack/explore-html/d8/d7e/gees_8f.html */
@@ -1527,7 +1527,7 @@ namespace ROPTLITE{
             realdpcomplex *SchurVecptr = (realdpcomplex *) SchurVec.ObtainWriteEntireData();
             /* compute the size of space required in the gees */
             gees_(jobvs, GLOBAL::N, nullptr, &n, SchurFormptr, &n, &sdim, eigs, SchurVecptr, &n, &lworkopt, &lwork, rwork, nullptr, &info);
-            lwork = static_cast<integer> (lworkopt.r);
+            lwork = static_cast<integer> (lworkopt.real());
             realdpcomplex *work = new realdpcomplex[lwork];
             /* generalized schur decomposition for matrices A.
             details: www.netlib.org/lapack/explore-html/d8/d7e/gees_8f.html */
@@ -1607,7 +1607,7 @@ namespace ROPTLITE{
         /* compute the size of space required in the tgsyl */
         tgsyl_(GLOBAL::N, &GLOBAL::IZERO, &n, &m, const_cast<realdpcomplex *> (ASFptr), &n, const_cast<realdpcomplex *> (BSFptr), &m, Cptr, &n,
             DIdentityptr, &n, EIdentityptr, &m, FZerosptr, &n, &scalar, &dif, &lworkopt, &lwork, iwork, &info);
-        lwork = static_cast<integer> (lworkopt.r);
+        lwork = static_cast<integer> (lworkopt.real());
         realdpcomplex *work = new realdpcomplex[lwork];
         /* generalized Sylvester equation.
         details: www.netlib.org/lapack/explore-html/d8/d7e/gees_8f.html */
@@ -1618,7 +1618,7 @@ namespace ROPTLITE{
         delete[] iwork;
         if(info != 0)
             printf("warning: Matrix::DSYL may not be solved correctly!\n");
-        a.r = scalar; a.i = 0;
+    a = realdpcomplex{scalar, 0};
         return (ASV * C * BSV.GetTranspose()) / a;
     };
 
@@ -2160,8 +2160,8 @@ multiplication in Matlab is used. */
          mwIndex *mxAir = mxGetIr(rhs[1]), *mxAjc = mxGetJc(rhs[1]);
          for(integer i = 0; i < A.Getnz(); i++)
          {
-             mxAptr[i].real = Avals[i].r;
-             mxAptr[i].imag = Avals[i].i;
+             mxAptr[i].real = Avals[i].real();
+             mxAptr[i].imag = Avals[i].imag();
              mxAir[i] = A.Getir()[i];
          }
          for(integer i = 0; i < A.Getcol() + 1; i++)
@@ -2195,20 +2195,20 @@ multiplication in Matlab is used. */
  //         mxSetJc(rhs[1], nullptr);
          
          realdpcomplex *mxOut = (realdpcomplex *) mxGetComplexDoubles(lhs[0]);
-         if(beta.r == 0 && beta.i == 0)
+         if(beta.real() == 0 && beta.imag() == 0)
          {
              for(integer i = 0; i < length / 2; i++)
              {
-                 Space[2 * i] = alpha.r * mxOut[i].r - alpha.i * mxOut[i].i;
-                 Space[2 * i + 1] = alpha.r * mxOut[i].i + alpha.i * mxOut[i].r;
+                 Space[2 * i] = alpha.real() * mxOut[i].real() - alpha.imag() * mxOut[i].imag();
+                 Space[2 * i + 1] = alpha.real() * mxOut[i].imag() + alpha.imag() * mxOut[i].real();
              }
          }
          else
          {
              for(integer i = 0; i < length / 2; i++)
              {
-                 Space[2 * i] = alpha.r * mxOut[i].r - alpha.i * mxOut[i].i + beta.r * Space[2 * i] - beta.i * Space[2 * i + 1];
-                 Space[2 * i + 1] = alpha.r * mxOut[i].i + alpha.i * mxOut[i].r + beta.r * Space[2 * i + 1] + beta.i * Space[2 * i];
+                 Space[2 * i] = alpha.real() * mxOut[i].real() - alpha.imag() * mxOut[i].imag() + beta.real() * Space[2 * i] - beta.imag() * Space[2 * i + 1];
+                 Space[2 * i + 1] = alpha.real() * mxOut[i].imag() + alpha.imag() * mxOut[i].real() + beta.real() * Space[2 * i + 1] + beta.imag() * Space[2 * i];
              }
          }
          
@@ -2222,7 +2222,7 @@ multiplication in Matlab is used. */
          return *this;
  #else
         CopyOnWrite();
-        if(beta.r != 0 && beta.i != 0)
+        if(beta.real() != 0 && beta.imag() != 0)
             scal_(&length, &beta, (realdpcomplex *) Space, &GLOBAL::IONE);
         else
         {
@@ -2311,8 +2311,8 @@ multiplication in Matlab is used. */
          mwIndex *mxBir = mxGetIr(rhs[3]), *mxBjc = mxGetJc(rhs[3]);
          for(integer i = 0; i < B.Getnz(); i++)
          {
-             mxBptr[i].real = Bvals[i].r;
-             mxBptr[i].imag = Bvals[i].i;
+             mxBptr[i].real = Bvals[i].real();
+             mxBptr[i].imag = Bvals[i].imag();
              mxBir[i] = B.Getir()[i];
          }
          for(integer i = 0; i < B.Getcol() + 1; i++)
@@ -2336,20 +2336,20 @@ multiplication in Matlab is used. */
  //         mxSetJc(rhs[3], nullptr);
          
          realdpcomplex *mxOut = (realdpcomplex *) mxGetComplexDoubles(lhs[0]);
-         if(beta.r == 0 && beta.i == 0)
+         if(beta.real() == 0 && beta.imag() == 0)
          {
              for(integer i = 0; i < length / 2; i++)
              {
-                 Space[2 * i] = alpha.r * mxOut[i].r - alpha.i * mxOut[i].i;
-                 Space[2 * i + 1] = alpha.r * mxOut[i].i + alpha.i * mxOut[i].r;
+                 Space[2 * i] = alpha.real() * mxOut[i].real() - alpha.imag() * mxOut[i].imag();
+                 Space[2 * i + 1] = alpha.real() * mxOut[i].imag() + alpha.imag() * mxOut[i].real();
              }
          }
          else
          {
              for(integer i = 0; i < length / 2; i++)
              {
-                 Space[2 * i] = alpha.r * mxOut[i].r - alpha.i * mxOut[i].i + beta.r * Space[2 * i] - beta.i * Space[2 * i + 1];
-                 Space[2 * i + 1] = alpha.r * mxOut[i].i + alpha.i * mxOut[i].r + beta.r * Space[2 * i + 1] + beta.i * Space[2 * i];
+                 Space[2 * i] = alpha.real() * mxOut[i].real() - alpha.imag() * mxOut[i].imag() + beta.real() * Space[2 * i] - beta.imag() * Space[2 * i + 1];
+                 Space[2 * i + 1] = alpha.real() * mxOut[i].imag() + alpha.imag() * mxOut[i].real() + beta.real() * Space[2 * i + 1] + beta.imag() * Space[2 * i];
              }
          }
  
@@ -2880,8 +2880,7 @@ multiplication in Matlab is used. */
 
             for (integer i = 0; i < n1 * n2; i++)
             {
-                tmp[i].r = vv[i].r;
-                tmp[i].i = vv[i].i;
+                tmp[i] = realdpcomplex{vv[i].real(), vv[i].imag()};
             }
 
             integer k = 1;
@@ -2897,18 +2896,15 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < k; i++)
                     {
-                        tmp[i + j * n1].r = (vv[2 * i + j * n1].r + vv[2 * i + 1 + j * n1].r) / r2;
-                        tmp[i + j * n1].i = (vv[2 * i + j * n1].i + vv[2 * i + 1 + j * n1].i) / r2;
-                        tmp[k + i + j * n1].r = (vv[2 * i + j*n1].r - vv[2 * i + 1 + j * n1].r) / r2;
-                        tmp[k + i + j * n1].i = (vv[2 * i + j*n1].i - vv[2 * i + 1 + j * n1].i) / r2;
+                        tmp[i + j * n1] = realdpcomplex{(vv[2 * i + j * n1].real() + vv[2 * i + 1 + j * n1].real()) / r2, (vv[2 * i + j * n1].imag() + vv[2 * i + 1 + j * n1].imag()) / r2};
+                        tmp[k + i + j * n1] = realdpcomplex{(vv[2 * i + j*n1].real() - vv[2 * i + 1 + j * n1].real()) / r2, (vv[2 * i + j*n1].imag() - vv[2 * i + 1 + j * n1].imag()) / r2};
                     }
                 }
                 for (integer j = 0; j < n2; j++)
                 {
                     for (integer i = 0; i < 2 * k; i++)
                     {
-                        vv[i + j * n1].r = tmp[i + j * n1].r;
-                        vv[i + j * n1].i = tmp[i + j * n1].i;
+                        vv[i + j * n1] = realdpcomplex{tmp[i + j * n1].real(), tmp[i + j * n1].imag()};
                     }
                 }
             }
@@ -2925,10 +2921,8 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < n1; i++)
                     {
-                        tmp[i + j * n1].r = (vv[i + 2 * j * n1].r + vv[i + (2 * j + 1) * n1].r) / r2;
-                        tmp[i + j * n1].i = (vv[i + 2 * j * n1].i + vv[i + (2 * j + 1) * n1].i) / r2;
-                        tmp[i + (k + j) * n1].r = (vv[i + 2 * j*n1].r - vv[i + (2 * j + 1) * n1].r) / r2;
-                        tmp[i + (k + j) * n1].i = (vv[i + 2 * j*n1].i - vv[i + (2 * j + 1) * n1].i) / r2;
+                        tmp[i + j * n1] = realdpcomplex{(vv[i + 2 * j * n1].real() + vv[i + (2 * j + 1) * n1].real()) / r2, (vv[i + 2 * j * n1].imag() + vv[i + (2 * j + 1) * n1].imag()) / r2};
+                        tmp[i + (k + j) * n1] = realdpcomplex{(vv[i + 2 * j*n1].real() - vv[i + (2 * j + 1) * n1].real()) / r2, (vv[i + 2 * j*n1].imag() - vv[i + (2 * j + 1) * n1].imag()) / r2};
                     }
                 }
 
@@ -2936,8 +2930,7 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < n1; i++)
                     {
-                        vv[i + j*n1].r = tmp[i + j*n1].r;
-                        vv[i + j*n1].i = tmp[i + j*n1].i;
+                        vv[i + j*n1] = realdpcomplex{tmp[i + j*n1].real(), tmp[i + j*n1].imag()};
                     }
                 }
             }
@@ -3033,8 +3026,7 @@ multiplication in Matlab is used. */
             {
                 for (integer i = 0; i < n1; i++)
                 {
-                    tmp[i + j * n1].r = vv[i + j * n1].r;
-                    tmp[i + j * n1].i = vv[i + j * n1].i;
+                    tmp[i + j * n1] = realdpcomplex{vv[i + j * n1].real(), vv[i + j * n1].imag()};
                 }
             }
             integer k = 1;
@@ -3045,10 +3037,8 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < n1; i++)
                     {
-                        tmp[i + (2 * j) * n1].r = (vv[i + j * n1].r + vv[i + (k + j)*n1].r) / r2;
-                        tmp[i + (2 * j) * n1].i = (vv[i + j * n1].i + vv[i + (k + j)*n1].i) / r2;
-                        tmp[i + (2 * j + 1) * n1].r = (vv[i + j * n1].r - vv[i + (k + j)*n1].r) / r2;
-                        tmp[i + (2 * j + 1) * n1].i = (vv[i + j * n1].i - vv[i + (k + j)*n1].i) / r2;
+                        tmp[i + (2 * j) * n1] = realdpcomplex{(vv[i + j * n1].real() + vv[i + (k + j)*n1].real()) / r2, (vv[i + j * n1].imag() + vv[i + (k + j)*n1].imag()) / r2};
+                        tmp[i + (2 * j + 1) * n1] = realdpcomplex{(vv[i + j * n1].real() - vv[i + (k + j)*n1].real()) / r2, (vv[i + j * n1].imag() - vv[i + (k + j)*n1].imag()) / r2};
                     }
                 }
 
@@ -3056,8 +3046,7 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < n1; i++)
                     {
-                        vv[i + j * n1].r = tmp[i + j * n1].r;
-                        vv[i + j * n1].i = tmp[i + j * n1].i;
+                        vv[i + j * n1] = realdpcomplex{tmp[i + j * n1].real(), tmp[i + j * n1].imag()};
                     }
                 }
                 k = k * 2;
@@ -3070,10 +3059,8 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < k; i++)
                     {
-                        tmp[2 * i + j * n1].r = (vv[i + j * n1].r + vv[k + i + j * n1].r) / r2;
-                        tmp[2 * i + j * n1].i = (vv[i + j * n1].i + vv[k + i + j * n1].i) / r2;
-                        tmp[2 * i + 1 + j * n1].r = (vv[i + j * n1].r - vv[k + i + j * n1].r) / r2;
-                        tmp[2 * i + 1 + j * n1].i = (vv[i + j * n1].i - vv[k + i + j * n1].i) / r2;
+                        tmp[2 * i + j * n1] = realdpcomplex{(vv[i + j * n1].real() + vv[k + i + j * n1].real()) / r2, (vv[i + j * n1].imag() + vv[k + i + j * n1].imag()) / r2};
+                        tmp[2 * i + 1 + j * n1] = realdpcomplex{(vv[i + j * n1].real() - vv[k + i + j * n1].real()) / r2, (vv[i + j * n1].imag() - vv[k + i + j * n1].imag()) / r2};
                     }
                 }
 
@@ -3081,8 +3068,7 @@ multiplication in Matlab is used. */
                 {
                     for (integer i = 0; i < 2 * k; i++)
                     {
-                        vv[i + j * n1].r = tmp[i + j * n1].r;
-                        vv[i + j * n1].i = tmp[i + j * n1].i;
+                        vv[i + j * n1] = realdpcomplex{tmp[i + j * n1].real(), tmp[i + j * n1].imag()};
                     }
                 }
                 k = k * 2;

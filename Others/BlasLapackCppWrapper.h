@@ -23,12 +23,13 @@ More functions will be added in this class.
 typedef integer (*L_fp)();
 #endif
 
+// Bring in f2c type definitions before starting any extern "C" block to avoid giving C linkage to C++ templates.
+#include "f2c.h"
+
 // Only declare the BLAS/LAPACK functions actually used by this wrapper.
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "f2c.h"
 // #include <f2c.h>
 
 // This is try to adhere to the C++ standard library complex type

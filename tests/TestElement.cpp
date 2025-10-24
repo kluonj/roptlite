@@ -73,7 +73,11 @@ void testElement(void)
         realdpcomplex *vals = new realdpcomplex[5];
         ir[0] = 0; ir[1] = 1; ir[2] = 3; ir[3] = 0; ir[4] = 2;
         jc[0] = 0; jc[1] = 1; jc[2] = 1; jc[3] = 2; jc[4] = 2;
-        vals[0].r = 1; vals[0].i = -1; vals[1].r = 1; vals[1].i = 2; vals[2].r = -1; vals[2].i = 5; vals[3].r = 2; vals[3].i = 1; vals[4].r = 1; vals[4].i = 0;
+    vals[0] = realdpcomplex(1, -1);
+    vals[1] = realdpcomplex(1, 2);
+    vals[2] = realdpcomplex(-1, 5);
+    vals[3] = realdpcomplex(2, 1);
+    vals[4] = realdpcomplex(1, 0);
         jcc[0] = 0; jcc[1] = 1; jcc[2] = 3; jcc[3] = 5;
         /* SM = [1-i, 0,          2+i;
                  0,   1 + 2 * i,  0;

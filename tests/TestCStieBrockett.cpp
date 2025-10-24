@@ -21,10 +21,9 @@ void testCStieBrockett(void)
     realdpcomplex *Dptr = (realdpcomplex *) D.ObtainWriteEntireData();
 	/*D is a diagonal matrix.*/
 	for (integer i = 0; i < p; i++)
-    {
-        Dptr[i].r = static_cast<realdp> (i + 1);
-        Dptr[i].i = static_cast<realdp> (0);
-    }
+	{
+		Dptr[i] = realdpcomplex(static_cast<realdp>(i + 1), static_cast<realdp>(0));
+	}
 
 
 //	Variable StieX(n, p);

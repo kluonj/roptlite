@@ -359,14 +359,14 @@ namespace ROPTLITE{
         integer idx = 0;
         for(integer i = 0; i < p; i++)
         {
-            resultptr[idx] = xTetaxptr[i + i * p].r;
+            resultptr[idx] = xTetaxptr[i + i * p].real();
             idx++;
         }
         for(integer i = 0; i < p; i++)
         {
             for(integer j = i + 1; j < p; j++)
             {
-                resultptr[idx] = (xTetaxptr[i + j * p].r + xTetaxptr[j + i * p].r) / r2;
+                resultptr[idx] = (xTetaxptr[i + j * p].real() + xTetaxptr[j + i * p].real()) / r2;
                 idx++;
             }
         }
@@ -374,7 +374,7 @@ namespace ROPTLITE{
         {
             for(integer j = i + 1; j < p; j++)
             {
-                resultptr[idx] = (xTetaxptr[i + j * p].i - xTetaxptr[j + i * p].i) / r2;
+                resultptr[idx] = (xTetaxptr[i + j * p].imag() - xTetaxptr[j + i * p].imag()) / r2;
                 idx++;
             }
         }
@@ -390,15 +390,15 @@ namespace ROPTLITE{
         integer idx = 0;
         for(integer i = 0; i < p; i++)
         {
-            xTetaxptr[i + i * p].r = intretaxptr[idx];
+            xTetaxptr[i + i * p] = realdpcomplex{intretaxptr[idx],             xTetaxptr[i + i * p].imag()};
             idx++;
         }
         for(integer i = 0; i < p; i++)
         {
             for(integer j = i + 1; j < p; j++)
             {
-                xTetaxptr[i + j * p].r = intretaxptr[idx] / r2;
-                xTetaxptr[j + i * p].r = xTetaxptr[i + j * p].r;
+                xTetaxptr[i + j * p] = realdpcomplex{intretaxptr[idx] / r2,                 xTetaxptr[i + j * p].imag()};
+                xTetaxptr[j + i * p] = realdpcomplex{xTetaxptr[i + j * p].real(),                 xTetaxptr[j + i * p].imag()};
                 idx++;
             }
         }
@@ -406,8 +406,8 @@ namespace ROPTLITE{
         {
             for(integer j = i + 1; j < p; j++)
             {
-                xTetaxptr[i + j * p].i = intretaxptr[idx] / r2;
-                xTetaxptr[j + i * p].i = - xTetaxptr[i + j * p].i;
+                xTetaxptr[i + j * p] = realdpcomplex{                xTetaxptr[i + j * p].real(), intretaxptr[idx] / r2};
+                xTetaxptr[j + i * p] = realdpcomplex{                xTetaxptr[j + i * p].real(), - xTetaxptr[i + j * p].imag()};
                 idx++;
             }
         }
@@ -432,7 +432,7 @@ namespace ROPTLITE{
         const realdpcomplex *Rptr = (realdpcomplex *) R.ObtainReadData();
         for(integer i = 0; i < p; i++)
         {
-            if(Rptr[i + i * p].r < 0)
+            if(Rptr[i + i * p].real() < 0)
             {
                 scal_(&n, &GLOBAL::ZNONE, resultptr + i * n, &GLOBAL::IONE);
             }
@@ -465,7 +465,7 @@ namespace ROPTLITE{
         trsm_(GLOBAL::R, GLOBAL::U, GLOBAL::N, GLOBAL::N, &n, &p, &GLOBAL::ZONE, const_cast<realdpcomplex *> (HHRptr), &n, exxixptr, &n);
         for(integer i = 0; i < p; i++)
         {
-            if(HHRptr[i + i * n].r < 0)
+            if(HHRptr[i + i * n].real() < 0)
                 scal_(&n, &GLOBAL::ZNONE, exxixptr + i * n, &GLOBAL::IONE);
         }
         Vector YtVRinv(p, p, "complex"); YtVRinv.AlphaABaddBetaThis(1, y, GLOBAL::C, exxix, GLOBAL::N, 0); /*YtVRinv = y.GetTranspose() * exxix; */
@@ -473,14 +473,13 @@ namespace ROPTLITE{
 
         for (integer i = 0; i < p; i++)
         {
-            YtVRinvptr[i + p * i].r = -YtVRinvptr[i + p * i].r;
-            YtVRinvptr[i + p * i].i = 0;
+            YtVRinvptr[i + p * i] = realdpcomplex{-YtVRinvptr[i + p * i].real(), 0};
             for (integer j = i + 1; j < p; j++)
             {
-                YtVRinvptr[i + p * j].r = -YtVRinvptr[j + p * i].r - YtVRinvptr[i + p * j].r;
-                YtVRinvptr[j + p * i].r = 0;
-                YtVRinvptr[i + p * j].i = YtVRinvptr[j + p * i].i - YtVRinvptr[i + p * j].i;
-                YtVRinvptr[j + p * i].i = 0;
+                YtVRinvptr[i + p * j] = realdpcomplex{-YtVRinvptr[j + p * i].real() - YtVRinvptr[i + p * j].real(),                 YtVRinvptr[i + p * j].imag()};
+                YtVRinvptr[j + p * i] = realdpcomplex{0,                 YtVRinvptr[j + p * i].imag()};
+                YtVRinvptr[i + p * j] = realdpcomplex{                YtVRinvptr[i + p * j].real(), YtVRinvptr[j + p * i].imag() - YtVRinvptr[i + p * j].imag()};
+                YtVRinvptr[j + p * i] = realdpcomplex{                YtVRinvptr[j + p * i].real(), 0};
             }
         }
         Vector exresult(exxix); exresult.AlphaABaddBetaThis(1, y, GLOBAL::N, YtVRinv, GLOBAL::N, 1); /*exresult = exxix + y * YtVRinv; */
@@ -600,7 +599,7 @@ namespace ROPTLITE{
         realdpcomplex *tmpptr = (realdpcomplex *) tmp.ObtainWritePartialData();
         for (integer i = 0; i < p; i++)
         {
-            if(HHRptr[i + n * i].r < 0)
+            if(HHRptr[i + n * i].real() < 0)
                 scal_(&p, &GLOBAL::ZNONE, tmpptr + i, &n);
         }
         realdp *resultptr = result->ObtainWriteEntireData();
@@ -609,7 +608,7 @@ namespace ROPTLITE{
 		integer idx = 0;
         for (integer i = 0; i < p; i++)
         {
-            resultptr[idx] = tmpptr[i + i * n].i;
+            resultptr[idx] = tmpptr[i + i * n].imag();
             idx++;
         }
         
@@ -617,9 +616,9 @@ namespace ROPTLITE{
 		{
 			for (integer j = i + 1; j < p; j++)
 			{
-                resultptr[idx] = r2 * (tmpptr[j + i * n].r - tmpptr[i + j * n].r) / 2;
+                resultptr[idx] = r2 * (tmpptr[j + i * n].real() - tmpptr[i + j * n].real()) / 2;
                 idx++;
-                resultptr[idx] = r2 * (tmpptr[j + i * n].i + tmpptr[i + j * n].i) / 2;
+                resultptr[idx] = r2 * (tmpptr[j + i * n].imag() + tmpptr[i + j * n].imag()) / 2;
                 idx++;
 			}
 		}
@@ -628,9 +627,9 @@ namespace ROPTLITE{
 		{
 			for (integer j = p; j < n; j++)
 			{
-				resultptr[idx] = tmpptr[j + i * n].r;
+				resultptr[idx] = tmpptr[j + i * n].real();
 				idx++;
-                resultptr[idx] = tmpptr[j + i * n].i;
+                resultptr[idx] = tmpptr[j + i * n].imag();
                 idx++;
 			}
 		}
@@ -650,8 +649,8 @@ namespace ROPTLITE{
         
         for (integer i = 0; i < p; i++)
         {
-            resultptr[i + i * n].i = intretaxptr[idx];
-            resultptr[i + i * n].r = 0;
+            resultptr[i + i * n] = realdpcomplex{            resultptr[i + i * n].real(), intretaxptr[idx]};
+            resultptr[i + i * n] = realdpcomplex{0,             resultptr[i + i * n].imag()};
             idx++;
         }
         
@@ -659,11 +658,11 @@ namespace ROPTLITE{
         {
             for (integer j = i + 1; j < p; j++)
             {
-                resultptr[j + i * n].r = intretaxptr[idx] / r2;
-                resultptr[i + j * n].r = - resultptr[j + i * n].r;
+                resultptr[j + i * n] = realdpcomplex{intretaxptr[idx] / r2,                 resultptr[j + i * n].imag()};
+                resultptr[i + j * n] = realdpcomplex{- resultptr[j + i * n].real(),                 resultptr[i + j * n].imag()};
                 idx++;
-                resultptr[j + i * n].i = intretaxptr[idx] / r2;
-                resultptr[i + j * n].i = resultptr[j + i * n].i;
+                resultptr[j + i * n] = realdpcomplex{                resultptr[j + i * n].real(), intretaxptr[idx] / r2};
+                resultptr[i + j * n] = realdpcomplex{                resultptr[i + j * n].real(), resultptr[j + i * n].imag()};
                 idx++;
             }
         }
@@ -672,9 +671,9 @@ namespace ROPTLITE{
         {
             for (integer j = p; j < n; j++)
             {
-                resultptr[j + i * n].r = intretaxptr[idx];
+                resultptr[j + i * n] = realdpcomplex{intretaxptr[idx],                 resultptr[j + i * n].imag()};
                 idx++;
-                resultptr[j + i * n].i = intretaxptr[idx];
+                resultptr[j + i * n] = realdpcomplex{                resultptr[j + i * n].real(), intretaxptr[idx]};
                 idx++;
             }
         }
@@ -683,7 +682,7 @@ namespace ROPTLITE{
         realdpcomplex *HHRptr = (realdpcomplex *) HHR.ObtainWritePartialData();
         for (integer i = 0; i < p; i++)
         {
-            if(HHRptr[i + n * i].r < 0)
+            if(HHRptr[i + n * i].real() < 0)
                 scal_(&p, &GLOBAL::ZNONE, resultptr + i, &n);
         }
         (*result) = result->HHRMtp(x.Field("_HHR"), x.Field("_tau"), GLOBAL::N, GLOBAL::L);

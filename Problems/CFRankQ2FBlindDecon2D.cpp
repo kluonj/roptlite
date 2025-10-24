@@ -102,7 +102,8 @@ namespace ROPTLITE {
             realdp tmp = static_cast<realdp> (L) / 8 / d / d / mu / mu;
             for (integer i = 0; i < L; i++)
             {
-                coef.r = 2.0 * tmp * rho * 2 * ((tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1 < 0) ? 0 : tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1) * rownorm2FBUptr[L];
+                // Set coef using whole-object assignment (std::complex real()/imag() are non-assignable)
+                coef = realdpcomplex(2.0 * tmp * rho * 2 * ((tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1 < 0) ? 0 : tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1) * rownorm2FBUptr[L], 0);
                 scal_(&r, &coef, (realdpcomplex *)(DFBUptr + 2 * r * i), &L);
             }
             EGFV = EGFV + (DFBU.Reshape(n1, n2).GetFFT2D(FFTW_BACKWARD).Reshape(L).GetTranspose() * (*Bptr)).GetTranspose();
@@ -110,7 +111,7 @@ namespace ROPTLITE {
             realdpcomplex coef2 = {0, 0};
             for (integer i = 0; i < L; i++)
             {
-                coef2.r += 2.0 * tmp * rho * rownorm2FBUptr[i] * 2 * ((tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1 < 0) ? 0 : tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1);
+                coef2 = realdpcomplex(coef2.real() + 2.0 * tmp * rho * rownorm2FBUptr[i] * 2 * ((tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1 < 0) ? 0 : tmp * rownorm2FBUptr[i] * rownorm2FBUptr[L] - 1), coef2.imag());
             }
             EGFTU = EGFTU + coef2 * V;
         }
