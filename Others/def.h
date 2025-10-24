@@ -34,9 +34,9 @@ This is the global head file. Every file in ROPTLITE will include this file.
     #define realdpcomplex doublecomplex
 #endif
 
-#ifndef MATLAB_MEX_FILE
-#include <f2c.h>
-#endif /* end of ifndef MATLAB_MEX_FILE */
+// #ifndef MATLAB_MEX_FILE
+// #include <f2c.h>
+// #endif /* end of ifndef MATLAB_MEX_FILE */
 
 #ifdef _WIN64 /* The following code is compiled only when this library is compiled in Windows (64-bit only)
 	If the code is compile under DEBUG mode, then test wheter there is memory leakage or not*/

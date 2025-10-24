@@ -23,189 +23,1449 @@ More functions will be added in this class.
 typedef integer (*L_fp)();
 #endif
 
-// Only declare the BLAS/LAPACK functions actually used by this wrapper.
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+#ifndef MATLAB_MEX_FILE
+/* blas and lapack related
+BLAS */
+#include <caxpy.h>
+#include <ccopy.h>
+#include <cdotc.h>
+#include <cdotu.h>
+#include <cgbmv.h>
+#include <cgemm.h>
+#include <cgemv.h>
+#include <cgerc.h>
+#include <cgeru.h>
+#include <chbmv.h>
+#include <chemm.h>
+#include <chemv.h>
+#include <cher.h>
+#include <cher2.h>
+#include <cher2k.h>
+#include <cherk.h>
+#include <chpmv.h>
+#include <chpr.h>
+#include <chpr2.h>
+#include <crotg.h>
+#include <cscal.h>
+#include <csscal.h>
+#include <cswap.h>
+#include <csymm.h>
+#include <csyr2k.h>
+#include <csyrk.h>
+#include <ctbmv.h>
+#include <ctbsv.h>
+#include <ctpmv.h>
+#include <ctpsv.h>
+#include <ctrmm.h>
+#include <ctrmv.h>
+#include <ctrsm.h>
+#include <ctrsv.h>
+#include <dasum.h>
+#include <daxpy.h>
+#include <dcabs1.h>
+#include <dcopy.h>
+#include <ddot.h>
+#include <dgbmv.h>
+#include <dgemm.h>
+#include <dgemv.h>
+#include <dger.h>
+#include <dnrm2.h>
+#include <drot.h>
+#include <drotg.h>
+#include <dsbmv.h>
+#include <dscal.h>
+#include <dspmv.h>
+#include <dspr.h>
+#include <dspr2.h>
+#include <dswap.h>
+#include <dsymm.h>
+#include <dsymv.h>
+#include <dsyr.h>
+#include <dsyr2.h>
+#include <dsyr2k.h>
+#include <dsyrk.h>
+#include <dtbmv.h>
+#include <dtbsv.h>
+#include <dtpmv.h>
+#include <dtpsv.h>
+#include <dtrmm.h>
+#include <dtrmv.h>
+#include <dtrsm.h>
+#include <dtrsv.h>
+#include <dzasum.h>
+#include <dznrm2.h>
 #include <f2c.h>
+#include <icamax.h>
+#include <idamax.h>
+#include <isamax.h>
+#include <izamax.h>
+#include <lsame.h>
+#include <sasum.h>
+#include <saxpy.h>
+#include <scasum.h>
+#include <scnrm2.h>
+#include <scopy.h>
+#include <sdot.h>
+#include <sgbmv.h>
+#include <sgemm.h>
+#include <sgemv.h>
+#include <sger.h>
+#include <snrm2.h>
+#include <srot.h>
+#include <srotg.h>
+#include <ssbmv.h>
+#include <sscal.h>
+#include <sspmv.h>
+#include <sspr.h>
+#include <sspr2.h>
+#include <sswap.h>
+#include <ssymm.h>
+#include <ssymv.h>
+#include <ssyr.h>
+#include <ssyr2.h>
+#include <ssyr2k.h>
+#include <ssyrk.h>
+#include <stbmv.h>
+#include <stbsv.h>
+#include <stpmv.h>
+#include <stpsv.h>
+#include <strmm.h>
+#include <strmv.h>
+#include <strsm.h>
+#include <strsv.h>
+#include <xerbla.h>
+#include <zaxpy.h>
+#include <zcopy.h>
+#include <zdotc.h>
+#include <zdotu.h>
+#include <zdscal.h>
+#include <zgbmv.h>
+#include <zgemm.h>
+#include <zgemv.h>
+#include <zgerc.h>
+#include <zgeru.h>
+#include <zhbmv.h>
+#include <zhemm.h>
+#include <zhemv.h>
+#include <zher.h>
+#include <zher2.h>
+#include <zher2k.h>
+#include <zherk.h>
+#include <zhpmv.h>
+#include <zhpr.h>
+#include <zhpr2.h>
+#include <zrotg.h>
+#include <zscal.h>
+#include <zswap.h>
+#include <zsymm.h>
+#include <zsyr2k.h>
+#include <zsyrk.h>
+#include <ztbmv.h>
+#include <ztbsv.h>
+#include <ztpmv.h>
+#include <ztpsv.h>
+#include <ztrmm.h>
+#include <ztrmv.h>
+#include <ztrsm.h>
+#include <ztrsv.h>
 
-// This is try to adhere to the C++ standard library complex type
-#ifdef complex
-#undef complex
-typedef std::complex<float> complex;
-// #else
-// typedef struct { real r, i; } complex;
-#endif
-
-#ifdef doublecomplex
-#undef doublecomplex
-typedef std::complex<double> doublecomplex;
-// #else
-// typedef struct { doublereal r, i; } doublecomplex;
-#endif
 
 
-// BLAS
-void caxpy_(const integer *n, const complex *ca, const complex *cx, const integer *incx, complex *cy, const integer *incy);
-void saxpy_(const integer *n, const float *sa, const float *sx, const integer *incx, float *sy, const integer *incy);
-void daxpy_(const integer *n, const double *da, const double *dx, const integer *incx, double *dy, const integer *incy);
-void zaxpy_(const integer *n, const doublecomplex *za, const doublecomplex *zx, const integer *incx, doublecomplex *zy, const integer *incy);
 
-void ccopy_(const integer *n, const complex *cx, const integer *incx, complex *cy, const integer *incy);
-void scopy_(const integer *n, const float *sx, const integer *incx, float *sy, const integer *incy);
-void dcopy_(const integer *n, const double *dx, const integer *incx, double *dy, const integer *incy);
-void zcopy_(const integer *n, const doublecomplex *dx, const integer *incx, doublecomplex *dy, const integer *incy);
-
-float sdot_(const integer *n, const float *sx, const integer *incx, const float *sy, const integer *incy);
-double ddot_(const integer *n, const double *dx, const integer *incx, const double *dy, const integer *incy);
-void cdotu_(complex *ret_val, const integer *n, const complex *cx, const integer *incx, const complex *cy, const integer *incy);
-void zdotu_(doublecomplex *ret_val, const integer *n, const doublecomplex *cx, const integer *incx, const doublecomplex *cy, const integer *incy);
-void cdotc_(complex *ret_val, const integer *n, const complex *cx, const integer *incx, const complex *cy, const integer *incy);
-void zdotc_(doublecomplex *ret_val, const integer *n, const doublecomplex *cx, const integer *incx, const doublecomplex *cy, const integer *incy);
-
-void cgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const complex *alpha, const complex *a, const integer *lda, const complex *b, const integer *ldb, const complex *beta, complex *c, const integer *ldc);
-void sgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const float *alpha, const float *a, const integer *lda, const float *b, const integer *ldb, const float *beta, float *c, const integer *ldc);
-void dgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const double *alpha, const double *a, const integer *lda, const double *b, const integer *ldb, const double *beta, double *c, const integer *ldc);
-void zgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const doublecomplex *alpha, const doublecomplex *a, const integer *lda, const doublecomplex *b, const integer *ldb, const doublecomplex *beta, doublecomplex *c, const integer *ldc);
-
-void cgemv_(const char *trans, const integer *m, const integer *n, const complex *alpha, const complex *a, const integer *lda, const complex *x, const integer *incx, const complex *beta, complex *y, const integer *incy);
-void sgemv_(const char *trans, const integer *m, const integer *n, const float *alpha, const float *a, const integer *lda, const float *x, const integer *incx, const float *beta, float *y, const integer *incy);
-void dgemv_(const char *trans, const integer *m, const integer *n, const double *alpha, const double *a, const integer *lda, const double *x, const integer *incx, const double *beta, double *y, const integer *incy);
-void zgemv_(const char *trans, const integer *m, const integer *n, const doublecomplex *alpha, const doublecomplex *a, const integer *lda, const doublecomplex *x, const integer *incx, const doublecomplex *beta, doublecomplex *y, const integer *incy);
-
-void cgeru_(const integer *m, const integer *n, const complex *alpha, const complex *x, const integer *incx, const complex *y, const integer *incy, complex *a, const integer *lda);
-void sger_(const integer *m, const integer *n, const float *alpha, const float *x, const integer *incx, const float *y, const integer *incy, float *a, const integer *lda);
-void dger_(const integer *m, const integer *n, const double *alpha, const double *x, const integer *incx, const double *y, const integer *incy, double *a, const integer *lda);
-void zgeru_(const integer *m, const integer *n, const doublecomplex *alpha, const doublecomplex *x, const integer *incx, const doublecomplex *y, const integer *incy, doublecomplex *a, const integer *lda);
-void cgerc_(const integer *m, const integer *n, const complex *alpha, const complex *x, const integer *incx, const complex *y, const integer *incy, complex *a, const integer *lda);
-void zgerc_(const integer *m, const integer *n, const doublecomplex *alpha, const doublecomplex *x, const integer *incx, const doublecomplex *y, const integer *incy, doublecomplex *a, const integer *lda);
-
-double dnrm2_(const integer *n, const double *x, const integer *incx);
-float snrm2_(const integer *n, const float *x, const integer *incx);
-
-void cscal_(const integer *n, const complex *ca, complex *cx, const integer *incx);
-void sscal_(const integer *n, const float *sa, float *sx, const integer *incx);
-void dscal_(const integer *n, const double *da, double *dx, const integer *incx);
-void zscal_(const integer *n, const doublecomplex *za, doublecomplex *zx, const integer *incx);
-
-void csymv_(const char *uplo, const integer *n, const complex *alpha, const complex *a, const integer *lda, const complex *x, const integer *incx, const complex *beta, complex *y, const integer *incy);
-void ssymv_(const char *uplo, const integer *n, const float *alpha, const float *a, const integer *lda, const float *x, const integer *incx, const float *beta, float *y, const integer *incy);
-void dsymv_(const char *uplo, const integer *n, const double *alpha, const double *a, const integer *lda, const double *x, const integer *incx, const double *beta, double *y, const integer *incy);
-void zsymv_(const char *uplo, const integer *n, const doublecomplex *alpha, const doublecomplex *a, const integer *lda, const doublecomplex *x, const integer *incx, const doublecomplex *beta, doublecomplex *y, const integer *incy);
-
-void ctrsm_(const char *side, const char *uplo, const char *transa, const char *diag, const integer *m, const integer *n, const complex *alpha, const complex *a, const integer *lda, complex *b, const integer *ldb);
-void strsm_(const char *side, const char *uplo, const char *transa, const char *diag, const integer *m, const integer *n, const float *alpha, const float *a, const integer *lda, float *b, const integer *ldb);
-void dtrsm_(const char *side, const char *uplo, const char *transa, const char *diag, const integer *m, const integer *n, const double *alpha, const double *a, const integer *lda, double *b, const integer *ldb);
-void ztrsm_(const char *side, const char *uplo, const char *transa, const char *diag, const integer *m, const integer *n, const doublecomplex *alpha, const doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb);
-
-// LAPACK
-int cgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, complex *a, const integer *lda, integer *sdim, complex *w, complex *vs, const integer *ldvs, complex *work, const integer *lwork, real *rwork, logical *bwork, integer *info);
-int dgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, double *a, const integer *lda, integer *sdim, double *wr, double *wi, double *vs, const integer *ldvs, double *work, const integer *lwork, logical *bwork, integer *info);
-int sgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, float *a, const integer *lda, integer *sdim, float *wr, float *wi, float *vs, const integer *ldvs, float *work, const integer *lwork, logical *bwork, integer *info);
-int zgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, doublecomplex *a, const integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, const integer *ldvs, doublecomplex *work, const integer *lwork, double *rwork, logical *bwork, integer *info);
-
-int cgeqp3_(const integer *m, const integer *n, complex *a, const integer *lda, integer *jpvt, complex *tau, complex *work, const integer *lwork, real *rwork, integer *info);
-int dgeqp3_(const integer *m, const integer *n, double *a, const integer *lda, integer *jpvt, double *tau, double *work, const integer *lwork, integer *info);
-int sgeqp3_(const integer *m, const integer *n, float *a, const integer *lda, integer *jpvt, float *tau, float *work, const integer *lwork, integer *info);
-int zgeqp3_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *jpvt, doublecomplex *tau, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
-
-int cgesdd_(const char *jobz, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *iwork, integer *info);
-int dgesdd_(const char *jobz, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *iwork, integer *info);
-int sgesdd_(const char *jobz, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *iwork, integer *info);
-int zgesdd_(const char *jobz, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *iwork, integer *info);
-
-int cgesv_(const integer *n, const integer *nrhs, complex *a, const integer *lda, integer *ipiv, complex *b, const integer *ldb, integer *info);
-int dgesv_(const integer *n, const integer *nrhs, double *a, const integer *lda, integer *ipiv, double *b, const integer *ldb, integer *info);
-int sgesv_(const integer *n, const integer *nrhs, float *a, const integer *lda, integer *ipiv, float *b, const integer *ldb, integer *info);
-int zgesv_(const integer *n, const integer *nrhs, doublecomplex *a, const integer *lda, integer *ipiv, doublecomplex *b, const integer *ldb, integer *info);
-
-int cgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *info);
-int dgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *info);
-int sgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *info);
-int zgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
-
-int cgetrf_(const integer *m, const integer *n, complex *a, const integer *lda, integer *ipiv, integer *info);
-int dgetrf_(const integer *m, const integer *n, double *a, const integer *lda, integer *ipiv, integer *info);
-int sgetrf_(const integer *m, const integer *n, float *a, const integer *lda, integer *ipiv, integer *info);
-int zgetrf_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *ipiv, integer *info);
-
-int cgetri_(const integer *n, complex *a, const integer *lda, const integer *ipiv, complex *work, const integer *lwork, integer *info);
-int dgetri_(const integer *n, double *a, const integer *lda, const integer *ipiv, double *work, const integer *lwork, integer *info);
-int sgetri_(const integer *n, float *a, const integer *lda, const integer *ipiv, float *work, const integer *lwork, integer *info);
-int zgetri_(const integer *n, doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *work, const integer *lwork, integer *info);
-
-int cgetrs_(const char *trans, const integer *n, const integer *nrhs, const complex *a, const integer *lda, const integer *ipiv, complex *b, const integer *ldb, integer *info);
-int dgetrs_(const char *trans, const integer *n, const integer *nrhs, const double *a, const integer *lda, const integer *ipiv, double *b, const integer *ldb, integer *info);
-int sgetrs_(const char *trans, const integer *n, const integer *nrhs, const float *a, const integer *lda, const integer *ipiv, float *b, const integer *ldb, integer *info);
-int zgetrs_(const char *trans, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *b, const integer *ldb, integer *info);
-
-int clapmt_(const logical *forwrd, const integer *m, const integer *n, complex *x, const integer *ldx, const integer *k);
-int dlapmt_(const logical *forwrd, const integer *m, const integer *n, double *x, const integer *ldx, const integer *k);
-int slapmt_(const logical *forwrd, const integer *m, const integer *n, float *x, const integer *ldx, const integer *k);
-int zlapmt_(const logical *forwrd, const integer *m, const integer *n, doublecomplex *x, const integer *ldx, const integer *k);
-
-int clarfx_(const char *side, const integer *m, const integer *n, const complex *v, const complex *tau, complex *c, const integer *ldc, complex *work);
-int dlarfx_(const char *side, const integer *m, const integer *n, const double *v, const double *tau, double *c, const integer *ldc, double *work);
-int slarfx_(const char *side, const integer *m, const integer *n, const float *v, const float *tau, float *c, const integer *ldc, float *work);
-int zlarfx_(const char *side, const integer *m, const integer *n, const doublecomplex *v, const doublecomplex *tau, doublecomplex *c, const integer *ldc, doublecomplex *work);
-
-int dorgqr_(const integer *m, const integer *n, const integer *k, double *a, const integer *lda, const double *tau, double *work, const integer *lwork, integer *info);
-int sorgqr_(const integer *m, const integer *n, const integer *k, float *a, const integer *lda, const float *tau, float *work, const integer *lwork, integer *info);
-
-int dormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const double *a, const integer *lda, const double *tau, double *c, const integer *ldc, double *work, const integer *lwork, integer *info);
-int sormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const float *a, const integer *lda, const float *tau, float *c, const integer *ldc, float *work, const integer *lwork, integer *info);
-
-int cpotrf_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
-int dpotrf_(const char *uplo, const integer *n, double *a, const integer *lda, integer *info);
-int spotrf_(const char *uplo, const integer *n, float *a, const integer *lda, integer *info);
-int zpotrf_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
-
-int cpotrs_(const char *uplo, const integer *n, const integer *nrhs, const complex *a, const integer *lda, complex *b, const integer *ldb, integer *info);
-int dpotrs_(const char *uplo, const integer *n, const integer *nrhs, const double *a, const integer *lda, double *b, const integer *ldb, integer *info);
-int spotrs_(const char *uplo, const integer *n, const integer *nrhs, const float *a, const integer *lda, float *b, const integer *ldb, integer *info);
-int zpotrs_(const char *uplo, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb, integer *info);
-
-int dsyev_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *info);
-int ssyev_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *info);
-
-int dsyevd_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-int ssyevd_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-
-int dsyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, integer *isuppz, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-int ssyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, integer *isuppz, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-
-int dsyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, double *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
-int ssyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, float *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
-
-int ctgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const complex *a, const integer *lda, const complex *b, const integer *ldb, complex *c, const integer *ldc, const complex *d, const integer *ldd, const complex *e, const integer *lde, complex *f, const integer *ldf, float *scale, float *dif, complex *work, const integer *lwork, integer *iwork, integer *info);
-int dtgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const double *a, const integer *lda, const double *b, const integer *ldb, double *c, const integer *ldc, const double *d, const integer *ldd, const double *e, const integer *lde, double *f, const integer *ldf, double *scale, double *dif, double *work, const integer *lwork, integer *iwork, integer *info);
-int stgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const float *a, const integer *lda, const float *b, const integer *ldb, float *c, const integer *ldc, const float *d, const integer *ldd, const float *e, const integer *lde, float *f, const integer *ldf, float *scale, float *dif, float *work, const integer *lwork, integer *iwork, integer *info);
-int ztgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const doublecomplex *a, const integer *lda, const doublecomplex *b, const integer *ldb, doublecomplex *c, const integer *ldc, const doublecomplex *d, const integer *ldd, const doublecomplex *e, const integer *lde, doublecomplex *f, const integer *ldf, double *scale, double *dif, doublecomplex *work, const integer *lwork, integer *iwork, integer *info);
-
-int ctrtrs_(const char *uplo, const char *trans, const char *diag, const integer *n, const integer *nrhs, const complex *a, const integer *lda, complex *b, const integer *ldb, integer *info);
-int dtrtrs_(const char *uplo, const char *trans, const char *diag, const integer *n, const integer *nrhs, const double *a, const integer *lda, double *b, const integer *ldb, integer *info);
-int strtrs_(const char *uplo, const char *trans, const char *diag, const integer *n, const integer *nrhs, const float *a, const integer *lda, float *b, const integer *ldb, integer *info);
-int ztrtrs_(const char *uplo, const char *trans, const char *diag, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb, integer *info);
-
-int cgegs_(const char *jobvsl, const char *jobvsr, const integer *n, complex *a, const integer *lda, complex *b, const integer *ldb, complex *alpha, complex *beta, complex *vsl, const integer *ldvsl, complex *vsr, const integer *ldvsr, complex *work, const integer *lwork, float *rwork, integer *info);
-int zgegs_(const char *jobvsl, const char *jobvsr, const integer *n, doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb, doublecomplex *alpha, doublecomplex *beta, doublecomplex *vsl, const integer *ldvsl, doublecomplex *vsr, const integer *ldvsr, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
-
-int cunmqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const complex *a, const integer *lda, const complex *tau, complex *c, const integer *ldc, complex *work, const integer *lwork, integer *info);
-int zunmqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *c, const integer *ldc, doublecomplex *work, const integer *lwork, integer *info);
-
-int cpotri_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
-int zpotri_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
-
-int cheev_(const char *jobz, const char *uplo, const integer *n, complex *a, const integer *lda, float *w, complex *work, const integer *lwork, float *rwork, integer *info);
-int zheev_(const char *jobz, const char *uplo, const integer *n, doublecomplex *a, const integer *lda, double *w, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
-
-int cungqr_(const integer *m, const integer *n, const integer *k, complex *a, const integer *lda, const complex *tau, complex *work, const integer *lwork, integer *info);
-int zungqr_(const integer *m, const integer *n, const integer *k, doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *work, const integer *lwork, integer *info);
-
-#ifdef __cplusplus
-}
-#endif
+/* LAPACK */
+#include <cbdsqr.h>
+#include <cgbbrd.h>
+#include <cgbcon.h>
+#include <cgbequ.h>
+#include <cgbrfs.h>
+#include <cgbsv.h>
+#include <cgbsvx.h>
+#include <cgbtf2.h>
+#include <cgbtrf.h>
+#include <cgbtrs.h>
+#include <cgebak.h>
+#include <cgebal.h>
+#include <cgebd2.h>
+#include <cgebrd.h>
+#include <cgecon.h>
+#include <cgeequ.h>
+#include <cgees.h>
+#include <cgeesx.h>
+#include <cgeev.h>
+#include <cgeevx.h>
+#include <cgegs.h>
+#include <cgegv.h>
+#include <cgehd2.h>
+#include <cgehrd.h>
+#include <cgelq2.h>
+#include <cgelqf.h>
+#include <cgels.h>
+#include <cgelsd.h>
+#include <cgelss.h>
+#include <cgelsx.h>
+#include <cgelsy.h>
+#include <cgeql2.h>
+#include <cgeqlf.h>
+#include <cgeqp3.h>
+#include <cgeqpf.h>
+#include <cgeqr2.h>
+#include <cgeqrf.h>
+#include <cgerfs.h>
+#include <cgerq2.h>
+#include <cgerqf.h>
+#include <cgesc2.h>
+#include <cgesdd.h>
+#include <cgesv.h>
+#include <cgesvd.h>
+#include <cgesvx.h>
+#include <cgetc2.h>
+#include <cgetf2.h>
+#include <cgetrf.h>
+#include <cgetri.h>
+#include <cgetrs.h>
+#include <cggbak.h>
+#include <cggbal.h>
+#include <cgges.h>
+#include <cggesx.h>
+#include <cggev.h>
+#include <cggevx.h>
+#include <cggglm.h>
+#include <cgghrd.h>
+#include <cgglse.h>
+#include <cggqrf.h>
+#include <cggrqf.h>
+#include <cggsvd.h>
+#include <cggsvp.h>
+#include <cgtcon.h>
+#include <cgtrfs.h>
+#include <cgtsv.h>
+#include <cgtsvx.h>
+#include <cgttrf.h>
+#include <cgttrs.h>
+#include <cgtts2.h>
+#include <chbev.h>
+#include <chbevd.h>
+#include <chbevx.h>
+#include <chbgst.h>
+#include <chbgv.h>
+#include <chbgvd.h>
+#include <chbgvx.h>
+#include <chbtrd.h>
+#include <checon.h>
+#include <cheev.h>
+#include <cheevd.h>
+#include <cheevr.h>
+#include <cheevx.h>
+#include <chegs2.h>
+#include <chegst.h>
+#include <chegv.h>
+#include <chegvd.h>
+#include <chegvx.h>
+#include <cherfs.h>
+#include <chesv.h>
+#include <chesvx.h>
+#include <chetd2.h>
+#include <chetf2.h>
+#include <chetrd.h>
+#include <chetrf.h>
+#include <chetri.h>
+#include <chetrs.h>
+#include <chgeqz.h>
+#include <chpcon.h>
+#include <chpev.h>
+#include <chpevd.h>
+#include <chpevx.h>
+#include <chpgst.h>
+#include <chpgv.h>
+#include <chpgvd.h>
+#include <chpgvx.h>
+#include <chprfs.h>
+#include <chpsv.h>
+#include <chpsvx.h>
+#include <chptrd.h>
+#include <chptrf.h>
+#include <chptri.h>
+#include <chptrs.h>
+#include <chsein.h>
+#include <chseqr.h>
+#include <clabrd.h>
+#include <clacgv.h>
+#include <clacon.h>
+#include <clacp2.h>
+#include <clacpy.h>
+#include <clacrm.h>
+#include <clacrt.h>
+#include <cladiv.h>
+#include <claed0.h>
+#include <claed7.h>
+#include <claed8.h>
+#include <claein.h>
+#include <claesy.h>
+#include <claev2.h>
+#include <clags2.h>
+#include <clagtm.h>
+#include <clahef.h>
+#include <clahqr.h>
+#include <clahrd.h>
+#include <claic1.h>
+#include <clals0.h>
+#include <clalsa.h>
+#include <clalsd.h>
+#include <clangb.h>
+#include <clange.h>
+#include <clangt.h>
+#include <clanhb.h>
+#include <clanhe.h>
+#include <clanhp.h>
+#include <clanhs.h>
+#include <clanht.h>
+#include <clansb.h>
+#include <clansp.h>
+#include <clansy.h>
+#include <clantb.h>
+#include <clantp.h>
+#include <clantr.h>
+#include <clapll.h>
+#include <clapmt.h>
+#include <claqgb.h>
+#include <claqge.h>
+#include <claqhb.h>
+#include <claqhe.h>
+#include <claqhp.h>
+#include <claqp2.h>
+#include <claqps.h>
+#include <claqsb.h>
+#include <claqsp.h>
+#include <claqsy.h>
+#include <clar1v.h>
+#include <clar2v.h>
+#include <clarcm.h>
+#include <clarf.h>
+#include <clarfb.h>
+#include <clarfg.h>
+#include <clarft.h>
+#include <clarfx.h>
+#include <clargv.h>
+#include <clarnv.h>
+#include <clarrv.h>
+#include <clartg.h>
+#include <clartv.h>
+#include <clarz.h>
+#include <clarzb.h>
+#include <clarzt.h>
+#include <clascl.h>
+#include <claset.h>
+#include <clasr.h>
+#include <classq.h>
+#include <claswp.h>
+#include <clasyf.h>
+#include <clatbs.h>
+#include <clatdf.h>
+#include <clatps.h>
+#include <clatrd.h>
+#include <clatrs.h>
+#include <clatrz.h>
+#include <clatzm.h>
+#include <clauu2.h>
+#include <clauum.h>
+#include <cpbcon.h>
+#include <cpbequ.h>
+#include <cpbrfs.h>
+#include <cpbstf.h>
+#include <cpbsv.h>
+#include <cpbsvx.h>
+#include <cpbtf2.h>
+#include <cpbtrf.h>
+#include <cpbtrs.h>
+#include <cpocon.h>
+#include <cpoequ.h>
+#include <cporfs.h>
+#include <cposv.h>
+#include <cposvx.h>
+#include <cpotf2.h>
+#include <cpotrf.h>
+#include <cpotri.h>
+#include <cpotrs.h>
+#include <cppcon.h>
+#include <cppequ.h>
+#include <cpprfs.h>
+#include <cppsv.h>
+#include <cppsvx.h>
+#include <cpptrf.h>
+#include <cpptri.h>
+#include <cpptrs.h>
+#include <cptcon.h>
+#include <cpteqr.h>
+#include <cptrfs.h>
+#include <cptsv.h>
+#include <cptsvx.h>
+#include <cpttrf.h>
+#include <cpttrs.h>
+#include <cptts2.h>
+#include <crot.h>
+#include <cspcon.h>
+#include <cspmv.h>
+#include <cspr.h>
+#include <csprfs.h>
+#include <cspsv.h>
+#include <cspsvx.h>
+#include <csptrf.h>
+#include <csptri.h>
+#include <csptrs.h>
+#include <csrot.h>
+#include <csrscl.h>
+#include <cstedc.h>
+#include <cstegr.h>
+#include <cstein.h>
+#include <csteqr.h>
+#include <csycon.h>
+#include <csymv.h>
+#include <csyr.h>
+#include <csyrfs.h>
+#include <csysv.h>
+#include <csysvx.h>
+#include <csytf2.h>
+#include <csytrf.h>
+#include <csytri.h>
+#include <csytrs.h>
+#include <ctbcon.h>
+#include <ctbrfs.h>
+#include <ctbtrs.h>
+#include <ctgevc.h>
+#include <ctgex2.h>
+#include <ctgexc.h>
+#include <ctgsen.h>
+#include <ctgsja.h>
+#include <ctgsna.h>
+#include <ctgsy2.h>
+#include <ctgsyl.h>
+#include <ctpcon.h>
+#include <ctprfs.h>
+#include <ctptri.h>
+#include <ctptrs.h>
+#include <ctrcon.h>
+#include <ctrevc.h>
+#include <ctrexc.h>
+#include <ctrrfs.h>
+#include <ctrsen.h>
+#include <ctrsna.h>
+#include <ctrsyl.h>
+#include <ctrti2.h>
+#include <ctrtri.h>
+#include <ctrtrs.h>
+#include <ctzrqf.h>
+#include <ctzrzf.h>
+#include <cung2l.h>
+#include <cung2r.h>
+#include <cungbr.h>
+#include <cunghr.h>
+#include <cungl2.h>
+#include <cunglq.h>
+#include <cungql.h>
+#include <cungqr.h>
+#include <cungr2.h>
+#include <cungrq.h>
+#include <cungtr.h>
+#include <cunm2l.h>
+#include <cunm2r.h>
+#include <cunmbr.h>
+#include <cunmhr.h>
+#include <cunml2.h>
+#include <cunmlq.h>
+#include <cunmql.h>
+#include <cunmqr.h>
+#include <cunmr2.h>
+#include <cunmr3.h>
+#include <cunmrq.h>
+#include <cunmrz.h>
+#include <cunmtr.h>
+#include <cupgtr.h>
+#include <cupmtr.h>
+#include <dbdsdc.h>
+#include <dbdsqr.h>
+#include <ddisna.h>
+#include <dgbbrd.h>
+#include <dgbcon.h>
+#include <dgbequ.h>
+#include <dgbrfs.h>
+#include <dgbsv.h>
+#include <dgbsvx.h>
+#include <dgbtf2.h>
+#include <dgbtrf.h>
+#include <dgbtrs.h>
+#include <dgebak.h>
+#include <dgebal.h>
+#include <dgebd2.h>
+#include <dgebrd.h>
+#include <dgecon.h>
+#include <dgeequ.h>
+#include <dgees.h>
+#include <dgeesx.h>
+#include <dgeev.h>
+#include <dgeevx.h>
+#include <dgegs.h>
+#include <dgegv.h>
+#include <dgehd2.h>
+#include <dgehrd.h>
+#include <dgelq2.h>
+#include <dgelqf.h>
+#include <dgels.h>
+#include <dgelsd.h>
+#include <dgelss.h>
+#include <dgelsx.h>
+#include <dgelsy.h>
+#include <dgeql2.h>
+#include <dgeqlf.h>
+#include <dgeqp3.h>
+#include <dgeqpf.h>
+#include <dgeqr2.h>
+#include <dgeqrf.h>
+#include <dgerfs.h>
+#include <dgerq2.h>
+#include <dgerqf.h>
+#include <dgesc2.h>
+#include <dgesdd.h>
+#include <dgesv.h>
+#include <dgesvd.h>
+#include <dgesvx.h>
+#include <dgetc2.h>
+#include <dgetf2.h>
+#include <dgetrf.h>
+#include <dgetri.h>
+#include <dgetrs.h>
+#include <dggbak.h>
+#include <dggbal.h>
+#include <dgges.h>
+#include <dggesx.h>
+#include <dggev.h>
+#include <dggevx.h>
+#include <dggglm.h>
+#include <dgghrd.h>
+#include <dgglse.h>
+#include <dggqrf.h>
+#include <dggrqf.h>
+#include <dggsvd.h>
+#include <dggsvp.h>
+#include <dgtcon.h>
+#include <dgtrfs.h>
+#include <dgtsv.h>
+#include <dgtsvx.h>
+#include <dgttrf.h>
+#include <dgttrs.h>
+#include <dgtts2.h>
+#include <dhgeqz.h>
+#include <dhsein.h>
+#include <dhseqr.h>
+#include <dlabad.h>
+#include <dlabrd.h>
+#include <dlacon.h>
+#include <dlacpy.h>
+#include <dladiv.h>
+#include <dlae2.h>
+#include <dlaebz.h>
+#include <dlaed0.h>
+#include <dlaed1.h>
+#include <dlaed2.h>
+#include <dlaed3.h>
+#include <dlaed4.h>
+#include <dlaed5.h>
+#include <dlaed6.h>
+#include <dlaed7.h>
+#include <dlaed8.h>
+#include <dlaed9.h>
+#include <dlaeda.h>
+#include <dlaein.h>
+#include <dlaev2.h>
+#include <dlaexc.h>
+#include <dlag2.h>
+#include <dlags2.h>
+#include <dlagtf.h>
+#include <dlagtm.h>
+#include <dlagts.h>
+#include <dlagv2.h>
+#include <dlahqr.h>
+#include <dlahrd.h>
+#include <dlaic1.h>
+#include <dlaln2.h>
+#include <dlals0.h>
+#include <dlalsa.h>
+#include <dlalsd.h>
+#include <dlamch.h>
+#include <dlamrg.h>
+#include <dlangb.h>
+#include <dlange.h>
+#include <dlangt.h>
+#include <dlanhs.h>
+#include <dlansb.h>
+#include <dlansp.h>
+#include <dlanst.h>
+#include <dlansy.h>
+#include <dlantb.h>
+#include <dlantp.h>
+#include <dlantr.h>
+#include <dlanv2.h>
+#include <dlapll.h>
+#include <dlapmt.h>
+#include <dlapy2.h>
+#include <dlapy3.h>
+#include <dlaqgb.h>
+#include <dlaqge.h>
+#include <dlaqp2.h>
+#include <dlaqps.h>
+#include <dlaqsb.h>
+#include <dlaqsp.h>
+#include <dlaqsy.h>
+#include <dlaqtr.h>
+#include <dlar1v.h>
+#include <dlar2v.h>
+#include <dlarf.h>
+#include <dlarfb.h>
+#include <dlarfg.h>
+#include <dlarft.h>
+#include <dlarfx.h>
+#include <dlargv.h>
+#include <dlarnv.h>
+#include <dlarrb.h>
+#include <dlarre.h>
+#include <dlarrf.h>
+#include <dlarrv.h>
+#include <dlartg.h>
+#include <dlartv.h>
+#include <dlaruv.h>
+#include <dlarz.h>
+#include <dlarzb.h>
+#include <dlarzt.h>
+#include <dlas2.h>
+#include <dlascl.h>
+#include <dlasd0.h>
+#include <dlasd1.h>
+#include <dlasd2.h>
+#include <dlasd3.h>
+#include <dlasd4.h>
+#include <dlasd5.h>
+#include <dlasd6.h>
+#include <dlasd7.h>
+#include <dlasd8.h>
+#include <dlasd9.h>
+#include <dlasda.h>
+#include <dlasdq.h>
+#include <dlasdt.h>
+#include <dlaset.h>
+#include <dlasq1.h>
+#include <dlasq2.h>
+#include <dlasq3.h>
+#include <dlasq4.h>
+#include <dlasq5.h>
+#include <dlasq6.h>
+#include <dlasr.h>
+#include <dlasrt.h>
+#include <dlassq.h>
+#include <dlasv2.h>
+#include <dlaswp.h>
+#include <dlasy2.h>
+#include <dlasyf.h>
+#include <dlatbs.h>
+#include <dlatdf.h>
+#include <dlatps.h>
+#include <dlatrd.h>
+#include <dlatrs.h>
+#include <dlatrz.h>
+#include <dlatzm.h>
+#include <dlauu2.h>
+#include <dlauum.h>
+#include <dopgtr.h>
+#include <dopmtr.h>
+#include <dorg2l.h>
+#include <dorg2r.h>
+#include <dorgbr.h>
+#include <dorghr.h>
+#include <dorgl2.h>
+#include <dorglq.h>
+#include <dorgql.h>
+#include <dorgqr.h>
+#include <dorgr2.h>
+#include <dorgrq.h>
+#include <dorgtr.h>
+#include <dorm2l.h>
+#include <dorm2r.h>
+#include <dormbr.h>
+#include <dormhr.h>
+#include <dorml2.h>
+#include <dormlq.h>
+#include <dormql.h>
+#include <dormqr.h>
+#include <dormr2.h>
+#include <dormr3.h>
+#include <dormrq.h>
+#include <dormrz.h>
+#include <dormtr.h>
+#include <dpbcon.h>
+#include <dpbequ.h>
+#include <dpbrfs.h>
+#include <dpbstf.h>
+#include <dpbsv.h>
+#include <dpbsvx.h>
+#include <dpbtf2.h>
+#include <dpbtrf.h>
+#include <dpbtrs.h>
+#include <dpocon.h>
+#include <dpoequ.h>
+#include <dporfs.h>
+#include <dposv.h>
+#include <dposvx.h>
+#include <dpotf2.h>
+#include <dpotrf.h>
+#include <dpotri.h>
+#include <dpotrs.h>
+#include <dppcon.h>
+#include <dppequ.h>
+#include <dpprfs.h>
+#include <dppsv.h>
+#include <dppsvx.h>
+#include <dpptrf.h>
+#include <dpptri.h>
+#include <dpptrs.h>
+#include <dptcon.h>
+#include <dpteqr.h>
+#include <dptrfs.h>
+#include <dptsv.h>
+#include <dptsvx.h>
+#include <dpttrf.h>
+#include <dpttrs.h>
+#include <dptts2.h>
+#include <drscl.h>
+#include <dsbev.h>
+#include <dsbevd.h>
+#include <dsbevx.h>
+#include <dsbgst.h>
+#include <dsbgv.h>
+#include <dsbgvd.h>
+#include <dsbgvx.h>
+#include <dsbtrd.h>
+#include <dsecnd.h>
+#include <dspcon.h>
+#include <dspev.h>
+#include <dspevd.h>
+#include <dspevx.h>
+#include <dspgst.h>
+#include <dspgv.h>
+#include <dspgvd.h>
+#include <dspgvx.h>
+#include <dsprfs.h>
+#include <dspsv.h>
+#include <dspsvx.h>
+#include <dsptrd.h>
+#include <dsptrf.h>
+#include <dsptri.h>
+#include <dsptrs.h>
+#include <dstebz.h>
+#include <dstedc.h>
+#include <dstegr.h>
+#include <dstein.h>
+#include <dsteqr.h>
+#include <dsterf.h>
+#include <dstev.h>
+#include <dstevd.h>
+#include <dstevr.h>
+#include <dstevx.h>
+#include <dsycon.h>
+#include <dsyev.h>
+#include <dsyevd.h>
+#include <dsyevr.h>
+#include <dsyevx.h>
+#include <dsygs2.h>
+#include <dsygst.h>
+#include <dsygv.h>
+#include <dsygvd.h>
+#include <dsygvx.h>
+#include <dsyrfs.h>
+#include <dsysv.h>
+#include <dsysvx.h>
+#include <dsytd2.h>
+#include <dsytf2.h>
+#include <dsytrd.h>
+#include <dsytrf.h>
+#include <dsytri.h>
+#include <dsytrs.h>
+#include <dtbcon.h>
+#include <dtbrfs.h>
+#include <dtbtrs.h>
+#include <dtgevc.h>
+#include <dtgex2.h>
+#include <dtgexc.h>
+#include <dtgsen.h>
+#include <dtgsja.h>
+#include <dtgsna.h>
+#include <dtgsy2.h>
+#include <dtgsyl.h>
+#include <dtpcon.h>
+#include <dtprfs.h>
+#include <dtptri.h>
+#include <dtptrs.h>
+#include <dtrcon.h>
+#include <dtrevc.h>
+#include <dtrexc.h>
+#include <dtrrfs.h>
+#include <dtrsen.h>
+#include <dtrsna.h>
+#include <dtrsyl.h>
+#include <dtrti2.h>
+#include <dtrtri.h>
+#include <dtrtrs.h>
+#include <dtzrqf.h>
+#include <dtzrzf.h>
+#include <dzsum1.h>
+#include <f2c.h>
+#include <icmax1.h>
+#include <ieeeck.h>
+#include <ilaenv.h>
+#include <izmax1.h>
+#include <lsame.h>
+#include <lsamen.h>
+#include <sbdsdc.h>
+#include <sbdsqr.h>
+#include <scsum1.h>
+#include <sdisna.h>
+#include <second.h>
+#include <sgbbrd.h>
+#include <sgbcon.h>
+#include <sgbequ.h>
+#include <sgbrfs.h>
+#include <sgbsv.h>
+#include <sgbsvx.h>
+#include <sgbtf2.h>
+#include <sgbtrf.h>
+#include <sgbtrs.h>
+#include <sgebak.h>
+#include <sgebal.h>
+#include <sgebd2.h>
+#include <sgebrd.h>
+#include <sgecon.h>
+#include <sgeequ.h>
+#include <sgees.h>
+#include <sgeesx.h>
+#include <sgeev.h>
+#include <sgeevx.h>
+#include <sgegs.h>
+#include <sgegv.h>
+#include <sgehd2.h>
+#include <sgehrd.h>
+#include <sgelq2.h>
+#include <sgelqf.h>
+#include <sgels.h>
+#include <sgelsd.h>
+#include <sgelss.h>
+#include <sgelsx.h>
+#include <sgelsy.h>
+#include <sgeql2.h>
+#include <sgeqlf.h>
+#include <sgeqp3.h>
+#include <sgeqpf.h>
+#include <sgeqr2.h>
+#include <sgeqrf.h>
+#include <sgerfs.h>
+#include <sgerq2.h>
+#include <sgerqf.h>
+#include <sgesc2.h>
+#include <sgesdd.h>
+#include <sgesv.h>
+#include <sgesvd.h>
+#include <sgesvx.h>
+#include <sgetc2.h>
+#include <sgetf2.h>
+#include <sgetrf.h>
+#include <sgetri.h>
+#include <sgetrs.h>
+#include <sggbak.h>
+#include <sggbal.h>
+#include <sgges.h>
+#include <sggesx.h>
+#include <sggev.h>
+#include <sggevx.h>
+#include <sggglm.h>
+#include <sgghrd.h>
+#include <sgglse.h>
+#include <sggqrf.h>
+#include <sggrqf.h>
+#include <sggsvd.h>
+#include <sggsvp.h>
+#include <sgtcon.h>
+#include <sgtrfs.h>
+#include <sgtsv.h>
+#include <sgtsvx.h>
+#include <sgttrf.h>
+#include <sgttrs.h>
+#include <sgtts2.h>
+#include <shgeqz.h>
+#include <shsein.h>
+#include <shseqr.h>
+#include <slabad.h>
+#include <slabrd.h>
+#include <slacon.h>
+#include <slacpy.h>
+#include <sladiv.h>
+#include <slae2.h>
+#include <slaebz.h>
+#include <slaed0.h>
+#include <slaed1.h>
+#include <slaed2.h>
+#include <slaed3.h>
+#include <slaed4.h>
+#include <slaed5.h>
+#include <slaed6.h>
+#include <slaed7.h>
+#include <slaed8.h>
+#include <slaed9.h>
+#include <slaeda.h>
+#include <slaein.h>
+#include <slaev2.h>
+#include <slaexc.h>
+#include <slag2.h>
+#include <slags2.h>
+#include <slagtf.h>
+#include <slagtm.h>
+#include <slagts.h>
+#include <slagv2.h>
+#include <slahqr.h>
+#include <slahrd.h>
+#include <slaic1.h>
+#include <slaln2.h>
+#include <slals0.h>
+#include <slalsa.h>
+#include <slalsd.h>
+#include <slamch.h>
+#include <slamrg.h>
+#include <slangb.h>
+#include <slange.h>
+#include <slangt.h>
+#include <slanhs.h>
+#include <slansb.h>
+#include <slansp.h>
+#include <slanst.h>
+#include <slansy.h>
+#include <slantb.h>
+#include <slantp.h>
+#include <slantr.h>
+#include <slanv2.h>
+#include <slapll.h>
+#include <slapmt.h>
+#include <slapy2.h>
+#include <slapy3.h>
+#include <slaqgb.h>
+#include <slaqge.h>
+#include <slaqp2.h>
+#include <slaqps.h>
+#include <slaqsb.h>
+#include <slaqsp.h>
+#include <slaqsy.h>
+#include <slaqtr.h>
+#include <slar1v.h>
+#include <slar2v.h>
+#include <slarf.h>
+#include <slarfb.h>
+#include <slarfg.h>
+#include <slarft.h>
+#include <slarfx.h>
+#include <slargv.h>
+#include <slarnv.h>
+#include <slarrb.h>
+#include <slarre.h>
+#include <slarrf.h>
+#include <slarrv.h>
+#include <slartg.h>
+#include <slartv.h>
+#include <slaruv.h>
+#include <slarz.h>
+#include <slarzb.h>
+#include <slarzt.h>
+#include <slas2.h>
+#include <slascl.h>
+#include <slasd0.h>
+#include <slasd1.h>
+#include <slasd2.h>
+#include <slasd3.h>
+#include <slasd4.h>
+#include <slasd5.h>
+#include <slasd6.h>
+#include <slasd7.h>
+#include <slasd8.h>
+#include <slasd9.h>
+#include <slasda.h>
+#include <slasdq.h>
+#include <slasdt.h>
+#include <slaset.h>
+#include <slasq1.h>
+#include <slasq2.h>
+#include <slasq3.h>
+#include <slasq4.h>
+#include <slasq5.h>
+#include <slasq6.h>
+#include <slasr.h>
+#include <slasrt.h>
+#include <slassq.h>
+#include <slasv2.h>
+#include <slaswp.h>
+#include <slasy2.h>
+#include <slasyf.h>
+#include <slatbs.h>
+#include <slatdf.h>
+#include <slatps.h>
+#include <slatrd.h>
+#include <slatrs.h>
+#include <slatrz.h>
+#include <slatzm.h>
+#include <slauu2.h>
+#include <slauum.h>
+#include <sopgtr.h>
+#include <sopmtr.h>
+#include <sorg2l.h>
+#include <sorg2r.h>
+#include <sorgbr.h>
+#include <sorghr.h>
+#include <sorgl2.h>
+#include <sorglq.h>
+#include <sorgql.h>
+#include <sorgqr.h>
+#include <sorgr2.h>
+#include <sorgrq.h>
+#include <sorgtr.h>
+#include <sorm2l.h>
+#include <sorm2r.h>
+#include <sormbr.h>
+#include <sormhr.h>
+#include <sorml2.h>
+#include <sormlq.h>
+#include <sormql.h>
+#include <sormqr.h>
+#include <sormr2.h>
+#include <sormr3.h>
+#include <sormrq.h>
+#include <sormrz.h>
+#include <sormtr.h>
+#include <spbcon.h>
+#include <spbequ.h>
+#include <spbrfs.h>
+#include <spbstf.h>
+#include <spbsv.h>
+#include <spbsvx.h>
+#include <spbtf2.h>
+#include <spbtrf.h>
+#include <spbtrs.h>
+#include <spocon.h>
+#include <spoequ.h>
+#include <sporfs.h>
+#include <sposv.h>
+#include <sposvx.h>
+#include <spotf2.h>
+#include <spotrf.h>
+#include <spotri.h>
+#include <spotrs.h>
+#include <sppcon.h>
+#include <sppequ.h>
+#include <spprfs.h>
+#include <sppsv.h>
+#include <sppsvx.h>
+#include <spptrf.h>
+#include <spptri.h>
+#include <spptrs.h>
+#include <sptcon.h>
+#include <spteqr.h>
+#include <sptrfs.h>
+#include <sptsv.h>
+#include <sptsvx.h>
+#include <spttrf.h>
+#include <spttrs.h>
+#include <sptts2.h>
+#include <srscl.h>
+#include <ssbev.h>
+#include <ssbevd.h>
+#include <ssbevx.h>
+#include <ssbgst.h>
+#include <ssbgv.h>
+#include <ssbgvd.h>
+#include <ssbgvx.h>
+#include <ssbtrd.h>
+#include <sspcon.h>
+#include <sspev.h>
+#include <sspevd.h>
+#include <sspevx.h>
+#include <sspgst.h>
+#include <sspgv.h>
+#include <sspgvd.h>
+#include <sspgvx.h>
+#include <ssprfs.h>
+#include <sspsv.h>
+#include <sspsvx.h>
+#include <ssptrd.h>
+#include <ssptrf.h>
+#include <ssptri.h>
+#include <ssptrs.h>
+#include <sstebz.h>
+#include <sstedc.h>
+#include <sstegr.h>
+#include <sstein.h>
+#include <ssteqr.h>
+#include <ssterf.h>
+#include <sstev.h>
+#include <sstevd.h>
+#include <sstevr.h>
+#include <sstevx.h>
+#include <ssycon.h>
+#include <ssyev.h>
+#include <ssyevd.h>
+#include <ssyevr.h>
+#include <ssyevx.h>
+#include <ssygs2.h>
+#include <ssygst.h>
+#include <ssygv.h>
+#include <ssygvd.h>
+#include <ssygvx.h>
+#include <ssyrfs.h>
+#include <ssysv.h>
+#include <ssysvx.h>
+#include <ssytd2.h>
+#include <ssytf2.h>
+#include <ssytrd.h>
+#include <ssytrf.h>
+#include <ssytri.h>
+#include <ssytrs.h>
+#include <stbcon.h>
+#include <stbrfs.h>
+#include <stbtrs.h>
+#include <stgevc.h>
+#include <stgex2.h>
+#include <stgexc.h>
+#include <stgsen.h>
+#include <stgsja.h>
+#include <stgsna.h>
+#include <stgsy2.h>
+#include <stgsyl.h>
+#include <stpcon.h>
+#include <stprfs.h>
+#include <stptri.h>
+#include <stptrs.h>
+#include <strcon.h>
+#include <strevc.h>
+#include <strexc.h>
+#include <strrfs.h>
+#include <strsen.h>
+#include <strsna.h>
+#include <strsyl.h>
+#include <strti2.h>
+#include <strtri.h>
+#include <strtrs.h>
+#include <stzrqf.h>
+#include <stzrzf.h>
+#include <xerbla.h>
+#include <zbdsqr.h>
+#include <zdrot.h>
+#include <zdrscl.h>
+#include <zgbbrd.h>
+#include <zgbcon.h>
+#include <zgbequ.h>
+#include <zgbrfs.h>
+#include <zgbsv.h>
+#include <zgbsvx.h>
+#include <zgbtf2.h>
+#include <zgbtrf.h>
+#include <zgbtrs.h>
+#include <zgebak.h>
+#include <zgebal.h>
+#include <zgebd2.h>
+#include <zgebrd.h>
+#include <zgecon.h>
+#include <zgeequ.h>
+#include <zgees.h>
+#include <zgeesx.h>
+#include <zgeev.h>
+#include <zgeevx.h>
+#include <zgegs.h>
+#include <zgegv.h>
+#include <zgehd2.h>
+#include <zgehrd.h>
+#include <zgelq2.h>
+#include <zgelqf.h>
+#include <zgels.h>
+#include <zgelsd.h>
+#include <zgelss.h>
+#include <zgelsx.h>
+#include <zgelsy.h>
+#include <zgeql2.h>
+#include <zgeqlf.h>
+#include <zgeqp3.h>
+#include <zgeqpf.h>
+#include <zgeqr2.h>
+#include <zgeqrf.h>
+#include <zgerfs.h>
+#include <zgerq2.h>
+#include <zgerqf.h>
+#include <zgesc2.h>
+#include <zgesdd.h>
+#include <zgesv.h>
+#include <zgesvd.h>
+#include <zgesvx.h>
+#include <zgetc2.h>
+#include <zgetf2.h>
+#include <zgetrf.h>
+#include <zgetri.h>
+#include <zgetrs.h>
+#include <zggbak.h>
+#include <zggbal.h>
+#include <zgges.h>
+#include <zggesx.h>
+#include <zggev.h>
+#include <zggevx.h>
+#include <zggglm.h>
+#include <zgghrd.h>
+#include <zgglse.h>
+#include <zggqrf.h>
+#include <zggrqf.h>
+#include <zggsvd.h>
+#include <zggsvp.h>
+#include <zgtcon.h>
+#include <zgtrfs.h>
+#include <zgtsv.h>
+#include <zgtsvx.h>
+#include <zgttrf.h>
+#include <zgttrs.h>
+#include <zgtts2.h>
+#include <zhbev.h>
+#include <zhbevd.h>
+#include <zhbevx.h>
+#include <zhbgst.h>
+#include <zhbgv.h>
+#include <zhbgvd.h>
+#include <zhbgvx.h>
+#include <zhbtrd.h>
+#include <zhecon.h>
+#include <zheev.h>
+#include <zheevd.h>
+#include <zheevr.h>
+#include <zheevx.h>
+#include <zhegs2.h>
+#include <zhegst.h>
+#include <zhegv.h>
+#include <zhegvd.h>
+#include <zhegvx.h>
+#include <zherfs.h>
+#include <zhesv.h>
+#include <zhesvx.h>
+#include <zhetd2.h>
+#include <zhetf2.h>
+#include <zhetrd.h>
+#include <zhetrf.h>
+#include <zhetri.h>
+#include <zhetrs.h>
+#include <zhgeqz.h>
+#include <zhpcon.h>
+#include <zhpev.h>
+#include <zhpevd.h>
+#include <zhpevx.h>
+#include <zhpgst.h>
+#include <zhpgv.h>
+#include <zhpgvd.h>
+#include <zhpgvx.h>
+#include <zhprfs.h>
+#include <zhpsv.h>
+#include <zhpsvx.h>
+#include <zhptrd.h>
+#include <zhptrf.h>
+#include <zhptri.h>
+#include <zhptrs.h>
+#include <zhsein.h>
+#include <zhseqr.h>
+#include <zlabrd.h>
+#include <zlacgv.h>
+#include <zlacon.h>
+#include <zlacp2.h>
+#include <zlacpy.h>
+#include <zlacrm.h>
+#include <zlacrt.h>
+#include <zladiv.h>
+#include <zlaed0.h>
+#include <zlaed7.h>
+#include <zlaed8.h>
+#include <zlaein.h>
+#include <zlaesy.h>
+#include <zlaev2.h>
+#include <zlags2.h>
+#include <zlagtm.h>
+#include <zlahef.h>
+#include <zlahqr.h>
+#include <zlahrd.h>
+#include <zlaic1.h>
+#include <zlals0.h>
+#include <zlalsa.h>
+#include <zlalsd.h>
+#include <zlangb.h>
+#include <zlange.h>
+#include <zlangt.h>
+#include <zlanhb.h>
+#include <zlanhe.h>
+#include <zlanhp.h>
+#include <zlanhs.h>
+#include <zlanht.h>
+#include <zlansb.h>
+#include <zlansp.h>
+#include <zlansy.h>
+#include <zlantb.h>
+#include <zlantp.h>
+#include <zlantr.h>
+#include <zlapll.h>
+#include <zlapmt.h>
+#include <zlaqgb.h>
+#include <zlaqge.h>
+#include <zlaqhb.h>
+#include <zlaqhe.h>
+#include <zlaqhp.h>
+#include <zlaqp2.h>
+#include <zlaqps.h>
+#include <zlaqsb.h>
+#include <zlaqsp.h>
+#include <zlaqsy.h>
+#include <zlar1v.h>
+#include <zlar2v.h>
+#include <zlarcm.h>
+#include <zlarf.h>
+#include <zlarfb.h>
+#include <zlarfg.h>
+#include <zlarft.h>
+#include <zlarfx.h>
+#include <zlargv.h>
+#include <zlarnv.h>
+#include <zlarrv.h>
+#include <zlartg.h>
+#include <zlartv.h>
+#include <zlarz.h>
+#include <zlarzb.h>
+#include <zlarzt.h>
+#include <zlascl.h>
+#include <zlaset.h>
+#include <zlasr.h>
+#include <zlassq.h>
+#include <zlaswp.h>
+#include <zlasyf.h>
+#include <zlatbs.h>
+#include <zlatdf.h>
+#include <zlatps.h>
+#include <zlatrd.h>
+#include <zlatrs.h>
+#include <zlatrz.h>
+#include <zlatzm.h>
+#include <zlauu2.h>
+#include <zlauum.h>
+#include <zpbcon.h>
+#include <zpbequ.h>
+#include <zpbrfs.h>
+#include <zpbstf.h>
+#include <zpbsv.h>
+#include <zpbsvx.h>
+#include <zpbtf2.h>
+#include <zpbtrf.h>
+#include <zpbtrs.h>
+#include <zpocon.h>
+#include <zpoequ.h>
+#include <zporfs.h>
+#include <zposv.h>
+#include <zposvx.h>
+#include <zpotf2.h>
+#include <zpotrf.h>
+#include <zpotri.h>
+#include <zpotrs.h>
+#include <zppcon.h>
+#include <zppequ.h>
+#include <zpprfs.h>
+#include <zppsv.h>
+#include <zppsvx.h>
+#include <zpptrf.h>
+#include <zpptri.h>
+#include <zpptrs.h>
+#include <zptcon.h>
+#include <zpteqr.h>
+#include <zptrfs.h>
+#include <zptsv.h>
+#include <zptsvx.h>
+#include <zpttrf.h>
+#include <zpttrs.h>
+#include <zptts2.h>
+#include <zrot.h>
+#include <zspcon.h>
+#include <zspmv.h>
+#include <zspr.h>
+#include <zsprfs.h>
+#include <zspsv.h>
+#include <zspsvx.h>
+#include <zsptrf.h>
+#include <zsptri.h>
+#include <zsptrs.h>
+#include <zstedc.h>
+#include <zstegr.h>
+#include <zstein.h>
+#include <zsteqr.h>
+#include <zsycon.h>
+#include <zsymv.h>
+#include <zsyr.h>
+#include <zsyrfs.h>
+#include <zsysv.h>
+#include <zsysvx.h>
+#include <zsytf2.h>
+#include <zsytrf.h>
+#include <zsytri.h>
+#include <zsytrs.h>
+#include <ztbcon.h>
+#include <ztbrfs.h>
+#include <ztbtrs.h>
+#include <ztgevc.h>
+#include <ztgex2.h>
+#include <ztgexc.h>
+#include <ztgsen.h>
+#include <ztgsja.h>
+#include <ztgsna.h>
+#include <ztgsy2.h>
+#include <ztgsyl.h>
+#include <ztpcon.h>
+#include <ztprfs.h>
+#include <ztptri.h>
+#include <ztptrs.h>
+#include <ztrcon.h>
+#include <ztrevc.h>
+#include <ztrexc.h>
+#include <ztrrfs.h>
+#include <ztrsen.h>
+#include <ztrsna.h>
+#include <ztrsyl.h>
+#include <ztrti2.h>
+#include <ztrtri.h>
+#include <ztrtrs.h>
+#include <ztzrqf.h>
+#include <ztzrzf.h>
+#include <zung2l.h>
+#include <zung2r.h>
+#include <zungbr.h>
+#include <zunghr.h>
+#include <zungl2.h>
+#include <zunglq.h>
+#include <zungql.h>
+#include <zungqr.h>
+#include <zungr2.h>
+#include <zungrq.h>
+#include <zungtr.h>
+#include <zunm2l.h>
+#include <zunm2r.h>
+#include <zunmbr.h>
+#include <zunmhr.h>
+#include <zunml2.h>
+#include <zunmlq.h>
+#include <zunmql.h>
+#include <zunmqr.h>
+#include <zunmr2.h>
+#include <zunmr3.h>
+#include <zunmrq.h>
+#include <zunmrz.h>
+#include <zunmtr.h>
+#include <zupgtr.h>
+#include <zupmtr.h>
+#endif /* end of ifndef MATLAB_MEX_FILE */
 #ifdef MATLAB_MEX_FILE
 #define caxpy_ caxpy
 #define ccopy_ ccopy
@@ -2201,4 +3461,4 @@ namespace ROPTLITE{
 
 }; /*end of ROPTLITE namespace*/
 
-#endif /* BLASLAPACKCPPWRAPPER_H */
+#endif
