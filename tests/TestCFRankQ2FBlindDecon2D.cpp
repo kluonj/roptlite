@@ -1,4 +1,4 @@
-#include "test/TestCFRankQ2FBlindDecon2D.h"
+#include "tests/TestCFRankQ2FBlindDecon2D.h"
 
 #ifdef ROPTLITE_WITH_FFTW
 

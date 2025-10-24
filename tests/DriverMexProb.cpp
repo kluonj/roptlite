@@ -1,5 +1,5 @@
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #ifdef MATLAB_MEX_FILE
 

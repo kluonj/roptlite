@@ -14,7 +14,7 @@ This is the test file to run the problem defined in LRBlindDeconvolution.h and L
 #include "Problems/Problem.h"
 #include <ctime>
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #include "Problems/CSFRQPhaseRetrieval.h"
 #include "Manifolds/SphereTx.h"
@@ -36,7 +36,7 @@ This is the test file to run the problem defined in LRBlindDeconvolution.h and L
 
 #include "Others/def.h"
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 using namespace ROPTLITE;
 

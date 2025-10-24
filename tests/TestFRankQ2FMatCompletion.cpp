@@ -1,4 +1,4 @@
-#include "test/TestFRankQ2FMatCompletion.h"
+#include "tests/TestFRankQ2FMatCompletion.h"
 
 using namespace ROPTLITE;
 

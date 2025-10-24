@@ -1,5 +1,5 @@
 
-#include "test/TestSPDKarcherMean.h"
+#include "tests/TestSPDKarcherMean.h"
 
 using namespace ROPTLITE;
 

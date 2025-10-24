@@ -1,5 +1,5 @@
 
-#include "test/TestGrassRQ.h"
+#include "tests/TestGrassRQ.h"
 
 using namespace ROPTLITE;
 

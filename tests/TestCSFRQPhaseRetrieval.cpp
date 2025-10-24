@@ -1,4 +1,4 @@
-#include "test/TestCSFRQPhaseRetrieval.h"
+#include "tests/TestCSFRQPhaseRetrieval.h"
 
 #ifdef ROPTLITE_WITH_FFTW
 

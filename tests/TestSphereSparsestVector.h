@@ -17,7 +17,7 @@ This is the test file for the Sparest Vector problem defined in SphereSparestVec
 #include <ctime>
 
 /*If this test file is called from Matlab, then functions in DriverMexProb.h are used.*/
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 /*Problem related classes*/
 #include "Problems/Problem.h"

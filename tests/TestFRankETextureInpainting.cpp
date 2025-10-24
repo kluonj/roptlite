@@ -1,5 +1,5 @@
 
-#include "test/TestFRankETextureInpainting.h"
+#include "tests/TestFRankETextureInpainting.h"
 
 using namespace ROPTLITE;
 

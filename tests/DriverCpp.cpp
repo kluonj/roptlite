@@ -1,4 +1,4 @@
-#include "test/DriverCpp.h"
+#include "tests/DriverCpp.h"
 
 using namespace ROPTLITE;
 

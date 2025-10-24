@@ -14,7 +14,7 @@ This is the test file to run the problem defined in LRMatrixCompletion.h and LRM
 #include "Problems/Problem.h"
 #include <ctime>
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #include "Problems/FRankE3FMatCompletion.h"
 #include "Manifolds/FixedRankE3F.h"

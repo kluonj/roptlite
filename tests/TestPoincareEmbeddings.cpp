@@ -1,4 +1,4 @@
-#include "test/TestPoincareEmbeddings.h"
+#include "tests/TestPoincareEmbeddings.h"
 
 using namespace ROPTLITE;
 

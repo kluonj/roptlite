@@ -10,7 +10,7 @@ This is the test file to run the problem defined in StieSoftICA.h and StieSoftIC
 #include <iostream>
 #include "Others/randgen.h"
 #include <ctime>
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #include "Problems/Problem.h"
 #include "Problems/StieSoftICA.h"

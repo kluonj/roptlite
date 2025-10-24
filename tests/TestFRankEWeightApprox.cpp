@@ -1,4 +1,4 @@
-#include "test/TestFRankEWeightApprox.h"
+#include "tests/TestFRankEWeightApprox.h"
 
 using namespace ROPTLITE;
 

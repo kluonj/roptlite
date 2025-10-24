@@ -1,4 +1,4 @@
-#include "test/TestElement.h"
+#include "tests/TestElement.h"
 
 using namespace ROPTLITE;
 

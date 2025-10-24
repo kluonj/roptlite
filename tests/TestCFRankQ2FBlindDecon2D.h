@@ -14,7 +14,7 @@ This is the test file to run the problem defined in LRBlindDeconvolution.h and L
 #include "Problems/Problem.h"
 #include <ctime>
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #include "Problems/CFRankQ2FBlindDecon2D.h"
 #include "Manifolds/SphereTx.h"

@@ -1,5 +1,5 @@
 
-#include "test/TestSphereSparsestVector.h"
+#include "tests/TestSphereSparsestVector.h"
 
 using namespace ROPTLITE;
 

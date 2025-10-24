@@ -1,5 +1,5 @@
 
-#include "test/DriverJuliaProb.h"
+#include "tests/DriverJuliaProb.h"
 
 #ifndef DRIVERJULIAPROB_CPP
 #define DRIVERJULIAPROB_CPP

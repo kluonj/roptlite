@@ -1,5 +1,5 @@
 
-#include "test/TestEucQuadratic.h"
+#include "tests/TestEucQuadratic.h"
 
 using namespace ROPTLITE;
 

@@ -33,7 +33,7 @@ This is the test file to run the problem defined in WeightedLowRank.h and Weight
 
 #include "Others/def.h"
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 using namespace ROPTLITE;
 

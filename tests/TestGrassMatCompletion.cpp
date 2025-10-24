@@ -1,4 +1,4 @@
-#include "test/TestGrassMatCompletion.h"
+#include "tests/TestGrassMatCompletion.h"
 
 using namespace ROPTLITE;
 

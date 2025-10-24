@@ -13,7 +13,7 @@ This is the test file to run the problem defined in NSOLyapunov.h and NSOLyapuno
 #include "Problems/Problem.h"
 #include <ctime>
 
-#include "test/DriverMexProb.h"
+#include "tests/DriverMexProb.h"
 
 #include "Problems/SFRQLyapunov.h"
 #include "Manifolds/SphereTx.h"

@@ -1,5 +1,5 @@
 
-#include "test/TestStieSPCA.h"
+#include "tests/TestStieSPCA.h"
 
 using namespace ROPTLITE;
 

@@ -28,22 +28,23 @@ typedef integer (*L_fp)();
 extern "C" {
 #endif
 
-#include <f2c.h>
+#include "f2c.h"
+// #include <f2c.h>
 
 // This is try to adhere to the C++ standard library complex type
-#ifdef complex
-#undef complex
-typedef std::complex<float> complex;
-// #else
-// typedef struct { real r, i; } complex;
-#endif
+// #ifdef complex
+// #undef complex
+// typedef std::complex<float> complex;
+// // #else
+// // typedef struct { real r, i; } complex;
+// #endif
 
-#ifdef doublecomplex
-#undef doublecomplex
-typedef std::complex<double> doublecomplex;
-// #else
-// typedef struct { doublereal r, i; } doublecomplex;
-#endif
+// #ifdef doublecomplex
+// #undef doublecomplex
+// typedef std::complex<double> doublecomplex;
+// // #else
+// // typedef struct { doublereal r, i; } doublecomplex;
+// #endif
 
 
 // BLAS
