@@ -61,10 +61,14 @@ void zcopy_(const integer *n, const doublecomplex *dx, const integer *incx, doub
 
 float sdot_(const integer *n, const float *sx, const integer *incx, const float *sy, const integer *incy);
 double ddot_(const integer *n, const double *dx, const integer *incx, const double *dy, const integer *incy);
-void cdotu_(complex *ret_val, const integer *n, const complex *cx, const integer *incx, const complex *cy, const integer *incy);
-void zdotu_(doublecomplex *ret_val, const integer *n, const doublecomplex *cx, const integer *incx, const doublecomplex *cy, const integer *incy);
-void cdotc_(complex *ret_val, const integer *n, const complex *cx, const integer *incx, const complex *cy, const integer *incy);
-void zdotc_(doublecomplex *ret_val, const integer *n, const doublecomplex *cx, const integer *incx, const doublecomplex *cy, const integer *incy);
+void cdotu_(const integer *n, const complex *cx, const integer *incx, 
+	const complex *cy, const integer *incy, complex *ret_val);
+void zdotu_(const integer *n, const doublecomplex *cx, const integer *incx, 
+	const doublecomplex *cy, const integer *incy, doublecomplex *ret_val);
+void cdotc_(const integer *n, const complex *cx, 	const integer *incx, 
+	const complex *cy, const integer *incy, complex *ret_val);
+void zdotc_(const integer *n, const doublecomplex *cx, const integer *incx, 
+	const doublecomplex *cy, const integer *incy, doublecomplex *ret_val);
 
 void cgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const complex *alpha, const complex *a, const integer *lda, const complex *b, const integer *ldb, const complex *beta, complex *c, const integer *ldc);
 void sgemm_(const char *transa, const char *transb, const integer *m, const integer *n, const integer *k, const float *alpha, const float *a, const integer *lda, const float *b, const integer *ldb, const float *beta, float *c, const integer *ldc);
@@ -102,45 +106,45 @@ void dtrsm_(const char *side, const char *uplo, const char *transa, const char *
 void ztrsm_(const char *side, const char *uplo, const char *transa, const char *diag, const integer *m, const integer *n, const doublecomplex *alpha, const doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb);
 
 // LAPACK
-int cgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, complex *a, const integer *lda, integer *sdim, complex *w, complex *vs, const integer *ldvs, complex *work, const integer *lwork, real *rwork, logical *bwork, integer *info);
-int dgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, double *a, const integer *lda, integer *sdim, double *wr, double *wi, double *vs, const integer *ldvs, double *work, const integer *lwork, logical *bwork, integer *info);
-int sgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, float *a, const integer *lda, integer *sdim, float *wr, float *wi, float *vs, const integer *ldvs, float *work, const integer *lwork, logical *bwork, integer *info);
-int zgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, doublecomplex *a, const integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, const integer *ldvs, doublecomplex *work, const integer *lwork, double *rwork, logical *bwork, integer *info);
+void cgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, complex *a, const integer *lda, integer *sdim, complex *w, complex *vs, const integer *ldvs, complex *work, const integer *lwork, real *rwork, logical *bwork, integer *info);
+void dgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, double *a, const integer *lda, integer *sdim, double *wr, double *wi, double *vs, const integer *ldvs, double *work, const integer *lwork, logical *bwork, integer *info);
+void sgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, float *a, const integer *lda, integer *sdim, float *wr, float *wi, float *vs, const integer *ldvs, float *work, const integer *lwork, logical *bwork, integer *info);
+void zgees_(const char *jobvs, const char *sort, L_fp select, const integer *n, doublecomplex *a, const integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, const integer *ldvs, doublecomplex *work, const integer *lwork, double *rwork, logical *bwork, integer *info);
 
-int cgeqp3_(const integer *m, const integer *n, complex *a, const integer *lda, integer *jpvt, complex *tau, complex *work, const integer *lwork, real *rwork, integer *info);
-int dgeqp3_(const integer *m, const integer *n, double *a, const integer *lda, integer *jpvt, double *tau, double *work, const integer *lwork, integer *info);
-int sgeqp3_(const integer *m, const integer *n, float *a, const integer *lda, integer *jpvt, float *tau, float *work, const integer *lwork, integer *info);
-int zgeqp3_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *jpvt, doublecomplex *tau, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
+void cgeqp3_(const integer *m, const integer *n, complex *a, const integer *lda, integer *jpvt, complex *tau, complex *work, const integer *lwork, real *rwork, integer *info);
+void dgeqp3_(const integer *m, const integer *n, double *a, const integer *lda, integer *jpvt, double *tau, double *work, const integer *lwork, integer *info);
+void sgeqp3_(const integer *m, const integer *n, float *a, const integer *lda, integer *jpvt, float *tau, float *work, const integer *lwork, integer *info);
+void zgeqp3_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *jpvt, doublecomplex *tau, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
 
-int cgesdd_(const char *jobz, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *iwork, integer *info);
-int dgesdd_(const char *jobz, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *iwork, integer *info);
-int sgesdd_(const char *jobz, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *iwork, integer *info);
-int zgesdd_(const char *jobz, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *iwork, integer *info);
+void cgesdd_(const char *jobz, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *iwork, integer *info);
+void dgesdd_(const char *jobz, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *iwork, integer *info);
+void sgesdd_(const char *jobz, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *iwork, integer *info);
+void zgesdd_(const char *jobz, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *iwork, integer *info);
 
 int cgesv_(const integer *n, const integer *nrhs, complex *a, const integer *lda, integer *ipiv, complex *b, const integer *ldb, integer *info);
 int dgesv_(const integer *n, const integer *nrhs, double *a, const integer *lda, integer *ipiv, double *b, const integer *ldb, integer *info);
 int sgesv_(const integer *n, const integer *nrhs, float *a, const integer *lda, integer *ipiv, float *b, const integer *ldb, integer *info);
 int zgesv_(const integer *n, const integer *nrhs, doublecomplex *a, const integer *lda, integer *ipiv, doublecomplex *b, const integer *ldb, integer *info);
 
-int cgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *info);
-int dgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *info);
-int sgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *info);
-int zgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
+void cgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, complex *a, const integer *lda, float *s, complex *u, const integer *ldu, complex *vt, const integer *ldvt, complex *work, const integer *lwork, float *rwork, integer *info);
+void dgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, double *a, const integer *lda, double *s, double *u, const integer *ldu, double *vt, const integer *ldvt, double *work, const integer *lwork, integer *info);
+void sgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, float *a, const integer *lda, float *s, float *u, const integer *ldu, float *vt, const integer *ldvt, float *work, const integer *lwork, integer *info);
+void zgesvd_(const char *jobu, const char *jobvt, const integer *m, const integer *n, doublecomplex *a, const integer *lda, double *s, doublecomplex *u, const integer *ldu, doublecomplex *vt, const integer *ldvt, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
 
-int cgetrf_(const integer *m, const integer *n, complex *a, const integer *lda, integer *ipiv, integer *info);
-int dgetrf_(const integer *m, const integer *n, double *a, const integer *lda, integer *ipiv, integer *info);
-int sgetrf_(const integer *m, const integer *n, float *a, const integer *lda, integer *ipiv, integer *info);
-int zgetrf_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *ipiv, integer *info);
+void sgetrf_(const integer *m, const integer *n, float *a, const integer *lda, integer *ipiv, integer *info);
+void dgetrf_(const integer *m, const integer *n, double *a, const integer *lda, integer *ipiv, integer *info);
+void cgetrf_(const integer *m, const integer *n, complex *a, const integer *lda, integer *ipiv, integer *info);
+void zgetrf_(const integer *m, const integer *n, doublecomplex *a, const integer *lda, integer *ipiv, integer *info);
 
-int cgetri_(const integer *n, complex *a, const integer *lda, const integer *ipiv, complex *work, const integer *lwork, integer *info);
-int dgetri_(const integer *n, double *a, const integer *lda, const integer *ipiv, double *work, const integer *lwork, integer *info);
-int sgetri_(const integer *n, float *a, const integer *lda, const integer *ipiv, float *work, const integer *lwork, integer *info);
-int zgetri_(const integer *n, doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *work, const integer *lwork, integer *info);
+void sgetri_(const integer *n, float *a, const integer *lda, const integer *ipiv, float *work, const integer *lwork, integer *info);
+void dgetri_(const integer *n, double *a, const integer *lda, const integer *ipiv, double *work, const integer *lwork, integer *info);
+void cgetri_(const integer *n, complex *a, const integer *lda, const integer *ipiv, complex *work, const integer *lwork, integer *info);
+void zgetri_(const integer *n, doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *work, const integer *lwork, integer *info);
 
-int cgetrs_(const char *trans, const integer *n, const integer *nrhs, const complex *a, const integer *lda, const integer *ipiv, complex *b, const integer *ldb, integer *info);
-int dgetrs_(const char *trans, const integer *n, const integer *nrhs, const double *a, const integer *lda, const integer *ipiv, double *b, const integer *ldb, integer *info);
-int sgetrs_(const char *trans, const integer *n, const integer *nrhs, const float *a, const integer *lda, const integer *ipiv, float *b, const integer *ldb, integer *info);
-int zgetrs_(const char *trans, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *b, const integer *ldb, integer *info);
+void cgetrs_(const char *trans, const integer *n, const integer *nrhs, const complex *a, const integer *lda, const integer *ipiv, complex *b, const integer *ldb, integer *info);
+void dgetrs_(const char *trans, const integer *n, const integer *nrhs, const double *a, const integer *lda, const integer *ipiv, double *b, const integer *ldb, integer *info);
+void sgetrs_(const char *trans, const integer *n, const integer *nrhs, const float *a, const integer *lda, const integer *ipiv, float *b, const integer *ldb, integer *info);
+void zgetrs_(const char *trans, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, const integer *ipiv, doublecomplex *b, const integer *ldb, integer *info);
 
 int clapmt_(const logical *forwrd, const integer *m, const integer *n, complex *x, const integer *ldx, const integer *k);
 int dlapmt_(const logical *forwrd, const integer *m, const integer *n, double *x, const integer *ldx, const integer *k);
@@ -158,27 +162,27 @@ int sorgqr_(const integer *m, const integer *n, const integer *k, float *a, cons
 int dormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const double *a, const integer *lda, const double *tau, double *c, const integer *ldc, double *work, const integer *lwork, integer *info);
 int sormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const float *a, const integer *lda, const float *tau, float *c, const integer *ldc, float *work, const integer *lwork, integer *info);
 
-int cpotrf_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
-int dpotrf_(const char *uplo, const integer *n, double *a, const integer *lda, integer *info);
-int spotrf_(const char *uplo, const integer *n, float *a, const integer *lda, integer *info);
-int zpotrf_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
+void cpotrf_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
+void dpotrf_(const char *uplo, const integer *n, double *a, const integer *lda, integer *info);
+void spotrf_(const char *uplo, const integer *n, float *a, const integer *lda, integer *info);
+void zpotrf_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
 
 int cpotrs_(const char *uplo, const integer *n, const integer *nrhs, const complex *a, const integer *lda, complex *b, const integer *ldb, integer *info);
 int dpotrs_(const char *uplo, const integer *n, const integer *nrhs, const double *a, const integer *lda, double *b, const integer *ldb, integer *info);
 int spotrs_(const char *uplo, const integer *n, const integer *nrhs, const float *a, const integer *lda, float *b, const integer *ldb, integer *info);
 int zpotrs_(const char *uplo, const integer *n, const integer *nrhs, const doublecomplex *a, const integer *lda, doublecomplex *b, const integer *ldb, integer *info);
 
-int dsyev_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *info);
-int ssyev_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *info);
+void dsyev_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *info);
+void ssyev_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *info);
 
-int dsyevd_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-int ssyevd_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
+void dsyevd_(const char *jobz, const char *uplo, const integer *n, double *a, const integer *lda, double *w, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
+void ssyevd_(const char *jobz, const char *uplo, const integer *n, float *a, const integer *lda, float *w, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
 
-int dsyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, integer *isuppz, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
-int ssyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, integer *isuppz, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
+void dsyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, integer *isuppz, double *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
+void ssyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, integer *isuppz, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
 
-int dsyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, double *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
-int ssyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, float *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
+void dsyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, double *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
+void ssyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, float *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
 
 int ctgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const complex *a, const integer *lda, const complex *b, const integer *ldb, complex *c, const integer *ldc, const complex *d, const integer *ldd, const complex *e, const integer *lde, complex *f, const integer *ldf, float *scale, float *dif, complex *work, const integer *lwork, integer *iwork, integer *info);
 int dtgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const double *a, const integer *lda, const double *b, const integer *ldb, double *c, const integer *ldc, const double *d, const integer *ldd, const double *e, const integer *lde, double *f, const integer *ldf, double *scale, double *dif, double *work, const integer *lwork, integer *iwork, integer *info);
@@ -196,11 +200,11 @@ int zgegs_(const char *jobvsl, const char *jobvsr, const integer *n, doublecompl
 int cunmqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const complex *a, const integer *lda, const complex *tau, complex *c, const integer *ldc, complex *work, const integer *lwork, integer *info);
 int zunmqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *c, const integer *ldc, doublecomplex *work, const integer *lwork, integer *info);
 
-int cpotri_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
-int zpotri_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
+void cpotri_(const char *uplo, const integer *n, complex *a, const integer *lda, integer *info);
+void zpotri_(const char *uplo, const integer *n, doublecomplex *a, const integer *lda, integer *info);
 
-int cheev_(const char *jobz, const char *uplo, const integer *n, complex *a, const integer *lda, float *w, complex *work, const integer *lwork, float *rwork, integer *info);
-int zheev_(const char *jobz, const char *uplo, const integer *n, doublecomplex *a, const integer *lda, double *w, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
+void cheev_(const char *jobz, const char *uplo, const integer *n, complex *a, const integer *lda, float *w, complex *work, const integer *lwork, float *rwork, integer *info);
+void zheev_(const char *jobz, const char *uplo, const integer *n, doublecomplex *a, const integer *lda, double *w, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
 
 int cungqr_(const integer *m, const integer *n, const integer *k, complex *a, const integer *lda, const complex *tau, complex *work, const integer *lwork, integer *info);
 int zungqr_(const integer *m, const integer *n, const integer *k, doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *work, const integer *lwork, integer *info);

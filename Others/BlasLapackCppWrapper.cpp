@@ -76,16 +76,16 @@ namespace ROPTLITE {
 	void dotu_(complex * ret_val, integer *n, complex *cx, integer *incx, complex *cy, integer *incy)
 	{
 #ifndef MATLAB_MEX_FILE
-		return cdotu_(ret_val, n, cx, incx, cy, incy);
+		return cdotu_(n, cx, incx, cy, incy, ret_val);
 #else
-        return cdotu_(ret_val, n, (float *)cx, incx, (float *)cy, incy);
+        return cdotu_(n, (float *)cx, incx, (float *)cy, incy, ret_val);
 //		ret_val[0] = cdotu_(n, (float *)cx, incx, (float *)cy, incy);
 #endif
 	};
 	void dotu_(doublecomplex * ret_val, integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy)
 	{
 #ifndef MATLAB_MEX_FILE
-		return zdotu_(ret_val, n, cx, incx, cy, incy);
+		return zdotu_(n, cx, incx, cy, incy, ret_val);
 #else
         return zdotu_(ret_val, n, (double *)cx, incx, (double *)cy, incy);
 //		ret_val[0] = zdotu_(n, (double *)cx, incx, (double *)cy, incy);
@@ -94,18 +94,18 @@ namespace ROPTLITE {
 	void dotc_(complex * ret_val, integer *n, complex *cx, integer *incx, complex *cy, integer *incy)
 	{
 #ifndef MATLAB_MEX_FILE
-		return cdotc_(ret_val, n, cx, incx, cy, incy);
+		return cdotc_(n, cx, incx, cy, incy, ret_val);
 #else
-        return cdotc_(ret_val, n, (float *)cx, incx, (float *)cy, incy);
+        return cdotc_(n, (float *)cx, incx, (float *)cy, incy, ret_val);
 //		ret_val[0] = cdotc_(n, (float *)cx, incx, (float *)cy, incy);
 #endif
 	};
 	void dotc_(doublecomplex * ret_val, integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy)
 	{
 #ifndef MATLAB_MEX_FILE
-		return zdotc_(ret_val, n, cx, incx, cy, incy);
+		return zdotc_(n, cx, incx, cy, incy, ret_val);
 #else
-        return zdotc_(ret_val, n, (double *)cx, incx, (double *)cy, incy);
+        return zdotc_(n, (double *)cx, incx, (double *)cy, incy, ret_val);
 //		ret_val[0] = zdotc_(n, (double *)cx, incx, (double *)cy, incy);
 #endif
 	};
