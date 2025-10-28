@@ -182,7 +182,11 @@ void dsyevr_(const char *jobz, const char *range, const char *uplo, const intege
 void ssyevr_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, integer *isuppz, float *work, const integer *lwork, integer *iwork, const integer *liwork, integer *info);
 
 void dsyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, double *a, const integer *lda, const double *vl, const double *vu, const integer *il, const integer *iu, const double *abstol, integer *m, double *w, double *z__, const integer *ldz, double *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
-void ssyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, float *a, const integer *lda, const float *vl, const float *vu, const integer *il, const integer *iu, const float *abstol, integer *m, float *w, float *z__, const integer *ldz, float *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
+void ssyevx_(const char *jobz, const char *range, const char *uplo, const integer *n, 
+	float *a, const integer *lda, 
+	const float *vl, const float *vu, const integer *il, const integer *iu, 
+	const float *abstol, integer *m, float *w, float *z__, const integer *ldz, 
+	float *work, const integer *lwork, integer *iwork, integer *ifail, integer *info);
 
 int ctgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const complex *a, const integer *lda, const complex *b, const integer *ldb, complex *c, const integer *ldc, const complex *d, const integer *ldd, const complex *e, const integer *lde, complex *f, const integer *ldf, float *scale, float *dif, complex *work, const integer *lwork, integer *iwork, integer *info);
 int dtgsyl_(const char *trans, const integer *ijob, const integer *m, const integer *n, const double *a, const integer *lda, const double *b, const integer *ldb, double *c, const integer *ldc, const double *d, const integer *ldd, const double *e, const integer *lde, double *f, const integer *ldf, double *scale, double *dif, double *work, const integer *lwork, integer *iwork, integer *info);
