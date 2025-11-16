@@ -156,8 +156,8 @@ int dlarfx_(const char *side, const integer *m, const integer *n, const double *
 int slarfx_(const char *side, const integer *m, const integer *n, const float *v, const float *tau, float *c, const integer *ldc, float *work);
 int zlarfx_(const char *side, const integer *m, const integer *n, const doublecomplex *v, const doublecomplex *tau, doublecomplex *c, const integer *ldc, doublecomplex *work);
 
-int dorgqr_(const integer *m, const integer *n, const integer *k, double *a, const integer *lda, const double *tau, double *work, const integer *lwork, integer *info);
-int sorgqr_(const integer *m, const integer *n, const integer *k, float *a, const integer *lda, const float *tau, float *work, const integer *lwork, integer *info);
+void dorgqr_(const integer *m, const integer *n, const integer *k, double *a, const integer *lda, const double *tau, double *work, const integer *lwork, integer *info);
+void sorgqr_(const integer *m, const integer *n, const integer *k, float *a, const integer *lda, const float *tau, float *work, const integer *lwork, integer *info);
 
 int dormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const double *a, const integer *lda, const double *tau, double *c, const integer *ldc, double *work, const integer *lwork, integer *info);
 int sormqr_(const char *side, const char *trans, const integer *m, const integer *n, const integer *k, const float *a, const integer *lda, const float *tau, float *c, const integer *ldc, float *work, const integer *lwork, integer *info);
@@ -210,8 +210,8 @@ void zpotri_(const char *uplo, const integer *n, doublecomplex *a, const integer
 void cheev_(const char *jobz, const char *uplo, const integer *n, complex *a, const integer *lda, float *w, complex *work, const integer *lwork, float *rwork, integer *info);
 void zheev_(const char *jobz, const char *uplo, const integer *n, doublecomplex *a, const integer *lda, double *w, doublecomplex *work, const integer *lwork, double *rwork, integer *info);
 
-int cungqr_(const integer *m, const integer *n, const integer *k, complex *a, const integer *lda, const complex *tau, complex *work, const integer *lwork, integer *info);
-int zungqr_(const integer *m, const integer *n, const integer *k, doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *work, const integer *lwork, integer *info);
+void cungqr_(const integer *m, const integer *n, const integer *k, complex *a, const integer *lda, const complex *tau, complex *work, const integer *lwork, integer *info);
+void zungqr_(const integer *m, const integer *n, const integer *k, doublecomplex *a, const integer *lda, const doublecomplex *tau, doublecomplex *work, const integer *lwork, integer *info);
 
 #ifdef __cplusplus
 }
